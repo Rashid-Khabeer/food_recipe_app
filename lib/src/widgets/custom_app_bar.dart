@@ -85,9 +85,9 @@ class _CustomAppBarState extends State<CustomAppBar> with ControlledStateMixin {
                     opacity: opacity,
                     child: Text(
                       widget.title!,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: AppTheme.primaryColor,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

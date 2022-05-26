@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
-import 'package:food_recipie_app/src/components/recipe/recipe_form_page.dart';
+import 'package:food_recipie_app/src/components/auth_page.dart';
 import 'package:food_recipie_app/src/utils/default_awaiter_behaviour.dart';
 import 'package:reusables/reusables.dart';
 
@@ -21,7 +21,7 @@ class FoodRecipeApp extends StatelessWidget {
       title: 'Food Recipe App',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.data,
-      home: const RecipeFormPage(),
+      home: const AuthPage(),
       scrollBehavior: const CupertinoScrollBehavior(),
     );
   }

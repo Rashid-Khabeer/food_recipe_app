@@ -45,7 +45,7 @@ abstract class AppTheme {
         padding:
             const _MaterialStateProperty(EdgeInsets.symmetric(vertical: 16)),
         minimumSize: const _MaterialStateProperty(Size(double.infinity, 0)),
-        textStyle: const _MaterialStateProperty(boldW600f24Style),
+        textStyle: const _MaterialStateProperty(kBoldW600f24Style),
         shape: const _MaterialStateProperty(RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         )),
@@ -67,7 +67,7 @@ abstract class AppTheme {
         padding:
             const _MaterialStateProperty(EdgeInsets.symmetric(vertical: 16)),
         minimumSize: const _MaterialStateProperty(Size(double.infinity, 0)),
-        textStyle: const _MaterialStateProperty(boldW600f24Style),
+        textStyle: const _MaterialStateProperty(kBoldW600f24Style),
         shape: const _MaterialStateProperty(RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         )),
