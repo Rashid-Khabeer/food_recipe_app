@@ -24,6 +24,13 @@ abstract class AppFirestoreService<T extends Model> {
           .get()
           .then((snap) => snap.docs.map((ds) => parseModel(ds)).toList());
 
+  Stream<List<T>> fetchSelectedStream(dynamic isEqualTo, String where) =>
+      FirebaseFirestore.instance
+          .collection(collectionName)
+          .where(where, isEqualTo: isEqualTo)
+          .snapshots()
+          .map((snap) => snap.docs.map((ds) => parseModel(ds)).toList());
+
   Stream<List<T>> fetchAllFirestore() => FirebaseFirestore.instance
       .collection(collectionName)
       .snapshots()
