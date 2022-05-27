@@ -66,6 +66,9 @@ class _IngredientsFormWidgetState extends State<IngredientsFormWidget>
             flex: 3,
             child: AppTextField(
               hint: 'Item name',
+              validator: InputValidator.required(
+                message: 'Name is required',
+              ),
               onChanged: (value) {
                 widget.controller.ingredients[i].name = value ?? '';
                 widget.controller.onChanged(widget.controller.ingredients);
@@ -78,6 +81,9 @@ class _IngredientsFormWidgetState extends State<IngredientsFormWidget>
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: AppTextField(
                 hint: 'Quantity',
+                validator: InputValidator.required(
+                  message: 'Required',
+                ),
                 onChanged: (value) {
                   widget.controller.ingredients[i].quantity = value ?? '';
                   widget.controller.onChanged(widget.controller.ingredients);

@@ -21,7 +21,7 @@ class RecipeModel extends Model {
   List<String> imagesList;
   String serves;
   String cookingTime;
-  String category;
+  List<String> category;
   List<IngredientsModel> ingredients;
   List<StepsModel> steps;
   String userId;

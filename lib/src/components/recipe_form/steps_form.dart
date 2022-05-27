@@ -83,6 +83,9 @@ class _StepsFormWidgetState extends State<StepsFormWidget>
               child: Column(children: [
                 AppTextField(
                   hint: 'Step to follow',
+                  validator: InputValidator.required(
+                    message: 'Step is required',
+                  ),
                   onChanged: (value) {
                     widget.controller.steps[i].step = value ?? '';
                   },

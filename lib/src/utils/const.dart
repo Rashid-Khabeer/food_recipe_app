@@ -10,3 +10,23 @@ const kBoldW600f16Style = TextStyle(
   fontSize: 16,
   color: Colors.white,
 );
+
+enum loginType { google, facebook }
+
+const kRecipeCategories = [
+  'Breakfast',
+  'Starters or Appetizers',
+  'Main courses',
+  'Desserts',
+  'Meats',
+  'Fish and Seafood',
+  'Salads',
+  'Pasta',
+  'Rice',
+  'Cakes',
+  'Spoon Plates',
+  'For children',
+  'Vegetarian',
+  'Sauces',
+  'Doughs and breads',
+];

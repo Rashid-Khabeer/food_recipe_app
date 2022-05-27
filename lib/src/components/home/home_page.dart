@@ -1,16 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_recipie_app/src/base/assets.dart';
 import 'package:food_recipie_app/src/components/home/home_controller.dart';
-import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:reusables/reusables.dart';
 
 class HomePage extends ControlledWidget<HomeController> {
-  const HomePage({
+  HomePage({
     Key? key,
-    required this.homeController,
-  }) : super(key: key, controller: homeController);
-
-  final HomeController homeController;
+  }) : super(key: key, controller: HomeController());
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -22,14 +19,7 @@ class _HomePageState extends State<HomePage> with ControlledStateMixin {
     return WillPopScope(
       onWillPop: widget.controller.onWillPop,
       child: Scaffold(
-        appBar: CustomAppBar(
-          controller: widget.controller.scrollController,
-          canPop: false,
-          title: widget.controller.title,
-        ),
-        body: SingleChildScrollView(
-          controller: widget.controller.scrollController,
-        ),
+        body: widget.controller.body,
         extendBody: true,
         bottomNavigationBar: BottomAppBar(
           notchMargin: 6,
@@ -42,22 +32,44 @@ class _HomePageState extends State<HomePage> with ControlledStateMixin {
             currentIndex: widget.controller.currentIndex,
             onTap: widget.controller.onTap,
             backgroundColor: Colors.white,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+            items: [
+              _buildBottom(
+                index: 0,
+                main: AppAssets.homeMain,
+                image: AppAssets.home,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+              _buildBottom(
+                index: 1,
+                main: AppAssets.savedMain,
+                image: AppAssets.saved,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+              _buildBottom(
+                index: 2,
+                main: AppAssets.add,
+                image: AppAssets.add,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+              _buildBottom(
+                index: 3,
+                main: AppAssets.profileMain,
+                image: AppAssets.profile,
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  BottomNavigationBarItem _buildBottom({
+    required int index,
+    required String main,
+    required String image,
+  }) {
+    return BottomNavigationBarItem(
+      icon: Image.asset(
+        widget.controller.currentIndex == index ? main : image,
+        width: 20,
+        height: 20,
       ),
     );
   }

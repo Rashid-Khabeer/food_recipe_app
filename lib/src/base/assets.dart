@@ -5,6 +5,8 @@ abstract class AppAssets {
 
   static const authBackground = '$_imagesDir/auth_bg.png';
   static const add = '$_imagesDir/add.png';
+  static const facebook = '$_imagesDir/facebook.png';
+  static const google = '$_imagesDir/google.png';
   static const addRound = '$_imagesDir/add_round.png';
   static const back = '$_imagesDir/back.png';
   static const bookmark = '$_imagesDir/bookmark.png';

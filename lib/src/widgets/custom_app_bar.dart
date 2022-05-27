@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:food_recipie_app/src/base/assets.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:reusables/reusables.dart';
 
@@ -11,12 +11,14 @@ class CustomAppBar extends ControlledWidget<ScrollController>
     this.title,
     this.actions,
     this.canPop = true,
+    this.color,
     ScrollController? controller,
   }) : super(key: key, controller: controller ?? ScrollController());
 
   final String? title;
   final List<Widget>? actions;
   final bool canPop;
+  final Color? color;
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -66,7 +68,10 @@ class _CustomAppBarState extends State<CustomAppBar> with ControlledStateMixin {
     return SizedBox(
       height: 56 + topPadding,
       child: Material(
-        color: AppTheme.backgroundColor,
+        color: widget.color ??
+            (widget.controller.offset > 0
+                ? Colors.white
+                : AppTheme.backgroundColor),
         elevation: elevation,
         child: Padding(
           padding: EdgeInsets.only(top: topPadding, left: 6),
@@ -75,7 +80,7 @@ class _CustomAppBarState extends State<CustomAppBar> with ControlledStateMixin {
               IconButton(
                 splashRadius: 28,
                 onPressed: Navigator.of(context).pop,
-                icon: const Icon(CupertinoIcons.arrow_left),
+                icon: Image.asset(AppAssets.back, width: 20, height: 20),
               ),
             if (widget.title != null)
               Expanded(
