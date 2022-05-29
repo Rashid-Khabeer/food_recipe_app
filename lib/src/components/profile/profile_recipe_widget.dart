@@ -4,6 +4,7 @@ import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/network_image_widget.dart';
+import 'package:food_recipie_app/src/widgets/show_rating_widget.dart';
 
 class ProfileRecipeWidget extends StatelessWidget {
   const ProfileRecipeWidget({
@@ -48,30 +49,7 @@ class ProfileRecipeWidget extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 8, 18),
           child: Column(children: [
             Row(children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.black,
-                ),
-                child: Row(children: [
-                  Image.asset(
-                    AppAssets.star,
-                    color: Colors.white,
-                    width: 12,
-                    height: 12,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    recipe.rating.toStringAsFixed(1),
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ]),
-              ),
+              ShowRatingWidget(rating: recipe.rating),
               const Spacer(),
               TextButton(
                 child: Image.asset(

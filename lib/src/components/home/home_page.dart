@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/assets.dart';
 import 'package:food_recipie_app/src/components/home/home_controller.dart';
+import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 import 'package:reusables/reusables.dart';
 
 class HomePage extends ControlledWidget<HomeController> {
@@ -16,6 +19,7 @@ class HomePage extends ControlledWidget<HomeController> {
 class _HomePageState extends State<HomePage> with ControlledStateMixin {
   @override
   Widget build(BuildContext context) {
+    log(FirebaseAuthService.userId);
     return WillPopScope(
       onWillPop: widget.controller.onWillPop,
       child: Scaffold(

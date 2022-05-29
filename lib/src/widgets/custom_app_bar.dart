@@ -80,7 +80,7 @@ class _CustomAppBarState extends State<CustomAppBar> with ControlledStateMixin {
               IconButton(
                 splashRadius: 28,
                 onPressed: Navigator.of(context).pop,
-                icon: Image.asset(AppAssets.back, width: 20, height: 20),
+                icon: Image.asset(AppAssets.back, width: 24, height: 24),
               ),
             if (widget.title != null)
               Expanded(

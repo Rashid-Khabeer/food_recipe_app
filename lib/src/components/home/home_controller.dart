@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:food_recipie_app/src/components/profile/profile_page.dart';
 import 'package:food_recipie_app/src/components/recipe_form/recipe_form_page.dart';
+import 'package:food_recipie_app/src/components/saved_recipes/saved_recipes_page.dart';
 
 class HomeController extends ChangeNotifier {
   HomeController() {
     _views = [
-      const Text(''),
+      const SavedRecipesPage(),
       const Text(''),
       const RecipeFormPage(),
       const ProfilePage(),
