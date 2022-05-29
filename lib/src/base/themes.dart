@@ -16,7 +16,7 @@ abstract class AppTheme {
 
   static MaterialColor get secondaryColor => _secondaryColor;
 
-  static Color get backgroundColor => const Color(0xffE5E5E5);
+  static Color get backgroundColor => Colors.white;
 
   static Color get ratingColor => const Color(0xffFFB661);
 

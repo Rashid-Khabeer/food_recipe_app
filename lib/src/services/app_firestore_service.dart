@@ -40,7 +40,7 @@ abstract class AppFirestoreService<T extends Model> {
 
   Stream<List<T>> fetchAllSortedFirestore() => FirebaseFirestore.instance
       .collection(collectionName)
-      .orderBy('timeStamp', descending: true)
+      .orderBy('timestamp', descending: true)
       .snapshots()
       .map((snapshot) =>
           snapshot.docs.map((document) => parseModel(document)).toList());

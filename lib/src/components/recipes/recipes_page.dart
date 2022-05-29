@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipie_app/src/components/saved_recipes/saved_recipe_widget.dart';
+import 'package:food_recipie_app/src/components/recipes/recipe_widget.dart';
 import 'package:food_recipie_app/src/data/models.dart';
-import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:food_recipie_app/src/widgets/simple_stream_builder.dart';
 
-class SavedRecipesPage extends StatefulWidget {
-  const SavedRecipesPage({Key? key}) : super(key: key);
+class RecipesPage extends StatefulWidget {
+  const RecipesPage({
+    Key? key,
+    required this.dataFunction,
+    required this.title,
+    required this.canPop,
+  }) : super(key: key);
+
+  final Stream<List<RecipeModel>> Function() dataFunction;
+  final String title;
+  final bool canPop;
 
   @override
-  _SavedRecipesPageState createState() => _SavedRecipesPageState();
+  _RecipesPageState createState() => _RecipesPageState();
 }
 
-class _SavedRecipesPageState extends State<SavedRecipesPage> {
+class _RecipesPageState extends State<RecipesPage> {
   final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Saved recipes',
-        canPop: false,
+        title: widget.title,
+        canPop: widget.canPop,
         controller: _scrollController,
       ),
       body: Padding(
@@ -34,21 +42,24 @@ class _SavedRecipesPageState extends State<SavedRecipesPage> {
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text('Saved Recipes', style: kBoldW600f24Style),
+                child: Text(widget.title, style: kBoldW600f24Style),
               ),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
             SimpleStreamBuilder<List<RecipeModel>>.simplerSliver(
-              stream: RecipeFirestoreService().fetchSaved(),
+              stream: widget.dataFunction(),
               context: context,
               builder: (data) {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (ctx, index) {
-                      return SavedRecipeWidget(recipe: data[index]);
+                      return RecipeWidget(
+                        recipe: data[index],
+                        padding: const EdgeInsets.only(bottom: 16),
+                      );
                     },
                     childCount: data.length,
                   ),

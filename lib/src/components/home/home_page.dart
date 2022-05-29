@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/assets.dart';
+import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/components/home/home_controller.dart';
 import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 import 'package:reusables/reusables.dart';
@@ -47,10 +48,14 @@ class _HomePageState extends State<HomePage> with ControlledStateMixin {
                 main: AppAssets.savedMain,
                 image: AppAssets.saved,
               ),
-              _buildBottom(
-                index: 2,
-                main: AppAssets.add,
-                image: AppAssets.add,
+              BottomNavigationBarItem(
+                icon: Icon(
+                  CupertinoIcons.add,
+                  color: widget.controller.currentIndex == 2
+                      ? AppTheme.primaryColor.shade500
+                      : AppTheme.neutralColor.shade300,
+                  size: 25,
+                ),
               ),
               _buildBottom(
                 index: 3,

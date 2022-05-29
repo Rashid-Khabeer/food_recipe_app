@@ -1,13 +1,19 @@
 import 'package:flutter/cupertino.dart';
+import 'package:food_recipie_app/src/components/home_view/home_view.dart';
 import 'package:food_recipie_app/src/components/profile/profile_page.dart';
 import 'package:food_recipie_app/src/components/recipe_form/recipe_form_page.dart';
-import 'package:food_recipie_app/src/components/saved_recipes/saved_recipes_page.dart';
+import 'package:food_recipie_app/src/components/recipes/recipes_page.dart';
+import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 
 class HomeController extends ChangeNotifier {
   HomeController() {
     _views = [
-      const SavedRecipesPage(),
-      const Text(''),
+      const HomeView(),
+      RecipesPage(
+        dataFunction: RecipeFirestoreService().fetchSaved,
+        title: 'Saved recipes',
+        canPop: false,
+      ),
       const RecipeFormPage(),
       const ProfilePage(),
     ];

@@ -107,19 +107,3 @@ class _CustomAppBarState extends State<CustomAppBar> with ControlledStateMixin {
     );
   }
 }
-
-// class CustomAppBackButton extends StatelessWidget {
-//   const CustomAppBackButton({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextButton(
-//       onPressed: AppNavigation.pop,
-//       child: Image.asset(Assets.backArrow, width: 24, height: 16.01),
-//       style: TextButton.styleFrom(
-//         shape: const CircleBorder(),
-//         primary: AppTheme.textColor,
-//       ),
-//     );
-//   }
-// }
