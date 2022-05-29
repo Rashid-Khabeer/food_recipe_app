@@ -64,6 +64,13 @@ class _AppDropDownWidgetState<T> extends State<AppDropDownWidget<T>> {
             ),
             borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppTheme.primaryColor.shade500,
+              width: 1,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
         ),
         onChanged: (value) {
           _value = value;

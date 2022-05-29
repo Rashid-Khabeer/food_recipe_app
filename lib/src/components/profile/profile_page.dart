@@ -1,11 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_recipie_app/src/base/nav.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
+import 'package:food_recipie_app/src/components/profile/edit_profile_page.dart';
+import 'package:food_recipie_app/src/components/profile/profile_recipe_widget.dart';
 import 'package:food_recipie_app/src/components/profile/recipe_count_widget.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
+import 'package:food_recipie_app/src/widgets/network_image_widget.dart';
 import 'package:food_recipie_app/src/widgets/simple_stream_builder.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -59,14 +64,30 @@ class _ProfilePageState extends State<ProfilePage> {
                         Container(
                           width: 100,
                           height: 100,
-                          decoration: const BoxDecoration(
-                            color: Colors.grey,
+                          decoration: BoxDecoration(
+                            color: AppTheme.neutralColor.shade100,
                             shape: BoxShape.circle,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: NetworkImageWidget(
+                              url: user.profilePicture,
+                              noImageWidget: Icon(
+                                CupertinoIcons.person,
+                                size: 60,
+                                color: AppTheme.primaryColor.shade500,
+                              ),
+                            ),
                           ),
                         ),
                         const Spacer(),
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            AppNavigation.to(
+                              context,
+                              EditProfilePage(user: user),
+                            );
+                          },
                           child: Text(
                             'Edit Profile',
                             style: TextStyle(
@@ -112,6 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ], crossAxisAlignment: CrossAxisAlignment.start),
           ),
         ),
+        const SliverToBoxAdapter(child: SizedBox(height: 20)),
         SimpleStreamBuilder<List<RecipeModel>>.simplerSliver(
           stream: RecipeFirestoreService().fetchSelectedStream(
             FirebaseAuthService.userId,
@@ -123,12 +145,15 @@ class _ProfilePageState extends State<ProfilePage> {
             return SliverList(
               delegate: SliverChildBuilderDelegate(
                 (ctx, index) {
-                  return const Text('Rashid');
+                  return ProfileRecipeWidget(recipe: data[index]);
                 },
                 childCount: data.length,
               ),
             );
           },
+        ),
+        SliverToBoxAdapter(
+          child: SizedBox(height: MediaQuery.of(context).padding.bottom),
         ),
       ], controller: _scrollController),
     );

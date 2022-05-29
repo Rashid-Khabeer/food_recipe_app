@@ -6,7 +6,9 @@ class RecipeCountController extends ChangeNotifier {
 
   void change(int count) {
     _count = count;
-    notifyListeners();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 }
 
