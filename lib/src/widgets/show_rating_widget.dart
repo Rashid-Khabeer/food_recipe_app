@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/assets.dart';
+import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/widgets/blur_widget.dart';
 
 class ShowRatingWidget extends StatelessWidget {
@@ -16,7 +17,7 @@ class ShowRatingWidget extends StatelessWidget {
       child: Row(children: [
         Image.asset(
           AppAssets.star,
-          color: Colors.white,
+          color: AppTheme.ratingColor,
           width: 12,
           height: 12,
         ),
