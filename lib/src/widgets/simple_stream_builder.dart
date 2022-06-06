@@ -36,7 +36,13 @@ class SimpleStreamBuilder<T> extends StreamBuilder<T> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: const <Widget>[
-                                // Center(child: Icon(Icons.search, size: 60)),
+                                Center(
+                                  child: Icon(
+                                    Icons.search,
+                                    size: 40,
+                                    color: Colors.grey,
+                                  ),
+                                ),
                                 Center(
                                   child: Text(
                                     'No Results',
@@ -57,7 +63,13 @@ class SimpleStreamBuilder<T> extends StreamBuilder<T> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: const <Widget>[
-                            Center(child: Icon(Icons.search, size: 60)),
+                            Center(
+                              child: Icon(
+                                Icons.search,
+                                size: 40,
+                                color: Colors.grey,
+                              ),
+                            ),
                             Center(
                               child: Text(
                                 'No Results',
@@ -92,7 +104,13 @@ class SimpleStreamBuilder<T> extends StreamBuilder<T> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: const <Widget>[
-              Center(child: Icon(Icons.search, size: 40)),
+              Center(
+                child: Icon(
+                  Icons.search,
+                  size: 40,
+                  color: Colors.grey,
+                ),
+              ),
               Center(
                 child: Text(
                   'No Results',

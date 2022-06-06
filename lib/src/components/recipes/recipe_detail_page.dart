@@ -137,7 +137,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                   child: Row(children: [
                     Expanded(child: Text(ing.name, style: kBoldW600f24Style)),
                     Text(
-                      ing.quantity,
+                      ing.quantity + ing.unit,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,

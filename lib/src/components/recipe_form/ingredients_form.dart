@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/widgets/app_dropdown_widget.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:reusables/reusables.dart';
 
@@ -14,7 +15,7 @@ class IngredientsController extends ChangeNotifier {
   final void Function(List<IngredientsModel>) onChanged;
 
   void _add() {
-    ingredients.add(IngredientsModel(name: '', quantity: ''));
+    ingredients.add(IngredientsModel(name: '', quantity: '', unit: ''));
     notifyListeners();
     onChanged(ingredients);
   }
@@ -75,22 +76,36 @@ class _IngredientsFormWidgetState extends State<IngredientsFormWidget>
               },
             ),
           ),
+          const SizedBox(width: 5),
           Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: AppTextField(
-                hint: 'Quantity',
-                validator: InputValidator.required(
-                  message: 'Required',
-                ),
-                onChanged: (value) {
-                  widget.controller.ingredients[i].quantity = value ?? '';
-                  widget.controller.onChanged(widget.controller.ingredients);
-                },
-              ),
+            child: AppTextField(
+              hint: 'Qty',
+              onChanged: (value) {
+                widget.controller.ingredients[i].quantity = value ?? '';
+                widget.controller.onChanged(widget.controller.ingredients);
+              },
             ),
           ),
+          const SizedBox(width: 5),
+          ///TODO Fix Overflow on Dropdown
+          Expanded(
+            child: AppDropDownWidget(
+              hint: "U",
+              onChanged: (String? v) {
+                widget.controller.ingredients[i].unit = v ?? '';
+                widget.controller.onChanged(widget.controller.ingredients);
+              },
+              items: const [
+                DropdownMenuItem(child: Text('kg'), value: 'kg'),
+                DropdownMenuItem(child: Text('g'), value: 'g'),
+                DropdownMenuItem(child: Text('L'), value: 'L'),
+                DropdownMenuItem(child: Text('ml'), value: 'ml'),
+                DropdownMenuItem(child: Text('u'), value: 'u'),
+              ],
+              label: '',
+            ),
+          ),
+          const SizedBox(width: 5),
           GestureDetector(
             onTap: () => widget.controller._remove(i),
             child: Container(

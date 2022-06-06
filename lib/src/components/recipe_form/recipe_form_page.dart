@@ -52,8 +52,8 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
           rating: 0,
           userId: FirebaseAuthService.userId,
           category: [],
-          cookingTime: '5 m',
-          ingredients: [IngredientsModel(name: '', quantity: '')],
+          cookingTime: '0 H',
+          ingredients: [IngredientsModel(name: '', quantity: '', unit: '')],
           ratings: [],
           savedUsersIds: [],
           serves: '1',
@@ -110,7 +110,7 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
               text: _recipe.serves,
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 16, 0, 11),
+              padding: const EdgeInsets.fromLTRB(0, 11, 0, 11),
               child: _buildTile(
                 icon: AppAssets.time,
                 title: 'Cooking time',
@@ -152,11 +152,13 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
         await AppNavigation.to(
           context,
           RecipeFormView(
-            onChanged: (value) => _recipe = value,
+            onChanged: (value) {
+              _recipe = value;
+              setState(() {});
+            },
             recipe: _recipe,
           ),
         );
-        setState(() {});
       },
       child: Container(
         padding: const EdgeInsets.fromLTRB(16, 12, 20, 12),

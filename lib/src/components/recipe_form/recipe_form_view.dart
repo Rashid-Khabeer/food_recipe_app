@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/modals.dart';
 import 'package:food_recipie_app/src/data/models.dart';
@@ -22,6 +23,22 @@ class RecipeFormView extends StatefulWidget {
 
 class _RecipeFormViewState extends State<RecipeFormView> {
   final _scrollController = ScrollController();
+  var date = DateTime.utc(2022, 1, 1, 0, 0, 0, 0, 0);
+
+  final Map<String, bool> _selectedCategories = {};
+
+  @override
+  void initState() {
+    super.initState();
+    buildSelectedCategoryMap();
+  }
+
+  buildSelectedCategoryMap() {
+    for (var cat in kRecipeCategories) {
+      _selectedCategories[cat] = false;
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,58 +75,95 @@ class _RecipeFormViewState extends State<RecipeFormView> {
               text: widget.recipe.cookingTime,
             ),
             textInputAction: TextInputAction.next,
-            onChanged: (value) {
-              widget.recipe.cookingTime = value ?? '';
-              widget.onChanged(widget.recipe);
+            onTap: () async {
+              await _showDialog(
+                CupertinoDatePicker(
+                  initialDateTime: date,
+                  mode: CupertinoDatePickerMode.time,
+                  use24hFormat: true,
+                  onDateTimeChanged: (DateTime value) {
+                    widget.recipe.cookingTime = value.hour.toString() +
+                        'H ' +
+                        value.minute.toString() +
+                        'M';
+                    widget.onChanged(widget.recipe);
+                  },
+                ),
+              );
+              setState(() {});
             },
+            readonly: true,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: AppDropDownWidget<String>(
-              hint: 'Category',
-              label: 'Category',
-              items: kRecipeCategories
-                  .map(
-                    (e) => DropdownMenuItem(
-                      child: Text(e),
-                      value: e,
-                    ),
-                  )
-                  .toList(),
-              onChanged: (value) {
-                if (value?.isEmpty ?? true) {
-                  return;
-                }
-                if (widget.recipe.category.contains(value)) {
-                  $showSnackBar(context, 'Already selected');
-                  return;
-                }
-                widget.recipe.category.add(value!);
-                widget.onChanged(widget.recipe);
-                setState(() {});
-              },
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(
+              'Select Categories',
+              style: kBoldW600f16Style.copyWith(color: Colors.black),
             ),
           ),
-          Text(
-            'Selected Categories',
-            style: kBoldW600f16Style.copyWith(color: Colors.black),
+          ///TODO Fix Category Scrolling
+          ListView.builder(
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return CheckboxListTile(
+                title: Text(kRecipeCategories[index]),
+                value: _selectedCategories[kRecipeCategories[index]],
+                onChanged: (bool? value) {
+                  setState(() {
+                    _selectedCategories[kRecipeCategories[index]] =
+                        value ?? false;
+                  });
+                  widget.recipe.category = _selectedCategories.keys.toList();
+                  widget.onChanged(widget.recipe);
+                },
+              );
+            },
+            itemCount: _selectedCategories.length,
           ),
-          for (var cat in widget.recipe.category)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3),
-              child: Row(children: [
-                Container(
-                  width: 7,
-                  height: 7,
-                  margin: const EdgeInsets.only(right: 7),
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                Text(cat),
-              ]),
-            ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(vertical: 20),
+          //   child: AppDropDownWidget<String>(
+          //     hint: 'Category',
+          //     label: 'Category',
+          //     items: kRecipeCategories
+          //         .map(
+          //           (e) => DropdownMenuItem(
+          //             child: Text(e),
+          //             value: e,
+          //           ),
+          //         )
+          //         .toList(),
+          //     onChanged: (value) {
+          //       if (value?.isEmpty ?? true) {
+          //         return;
+          //       }
+          //       if (widget.recipe.category.contains(value)) {
+          //         $showSnackBar(context, 'Already selected');
+          //         return;
+          //       }
+          //       widget.recipe.category.add(value!);
+          //       widget.onChanged(widget.recipe);
+          //       setState(() {});
+          //     },
+          //   ),
+          // ),
+          //
+          // for (var cat in widget.recipe.category)
+          //   Padding(
+          //     padding: const EdgeInsets.symmetric(vertical: 3),
+          //     child: Row(children: [
+          //       Container(
+          //         width: 7,
+          //         height: 7,
+          //         margin: const EdgeInsets.only(right: 7),
+          //         decoration: const BoxDecoration(
+          //           color: Colors.black,
+          //           shape: BoxShape.circle,
+          //         ),
+          //       ),
+          //       Text(cat),
+          //     ]),
+          //   ),
         ], crossAxisAlignment: CrossAxisAlignment.start),
       ),
       persistentFooterButtons: [
@@ -118,6 +172,27 @@ class _RecipeFormViewState extends State<RecipeFormView> {
           child: const Text('Save'),
         ),
       ],
+    );
+  }
+
+  Future<void> _showDialog(Widget child) async {
+    await showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 216,
+        padding: const EdgeInsets.only(top: 6.0),
+        // The Bottom margin is provided to align the popup above the system navigation bar.
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        // Provide a background color for the popup.
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        // Use a SafeArea widget to avoid system overlaps.
+        child: SafeArea(
+          top: false,
+          child: child,
+        ),
+      ),
     );
   }
 }
