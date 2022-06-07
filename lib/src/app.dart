@@ -20,7 +20,7 @@ class FoodRecipeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Food Recipe App',
+      title: 'Recetas Unicas',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.data,
       home: FirebaseAuthService.isLogin ? HomePage() : const AuthPage(),

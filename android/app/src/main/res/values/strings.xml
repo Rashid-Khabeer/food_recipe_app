@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Recetas Unicas</string>
+    <string name="facebook_app_id">1151409439124125</string>
+    <string name="fb_login_protocol_scheme">fb1151409439124125</string>
+    <string name="facebook_client_token">7255c0225c9502c025a4de8a3c04b573</string>
+</resources>

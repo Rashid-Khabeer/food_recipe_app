@@ -122,9 +122,9 @@ class _AuthPageState extends State<AuthPage> {
       if (_user == null) {
         _service.insertFirestoreWithId(UserModel(
           email: _authUser.user?.email ?? '',
-          name: '',
+          name: _authUser.user?.displayName,
           bio: '',
-          profilePicture: '',
+          profilePicture: _authUser.user?.photoURL,
         )..id = _authUser.user?.uid);
       }
     } catch (_) {

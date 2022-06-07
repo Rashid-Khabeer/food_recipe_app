@@ -1,4 +1,4 @@
-package com.tech_ocean.food_recipie_app
+package com.sparkosol.recetas_unicas
 
 import io.flutter.embedding.android.FlutterActivity
 
