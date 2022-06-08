@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/assets.dart';
+import 'package:food_recipie_app/src/base/modals.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/data/models.dart';
+import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/network_image_widget.dart';
 import 'package:food_recipie_app/src/widgets/show_rating_widget.dart';
@@ -52,13 +54,30 @@ class ProfileRecipeWidget extends StatelessWidget {
               ShowRatingWidget(rating: recipe.rating),
               const Spacer(),
               TextButton(
-                child: Image.asset(
-                  AppAssets.menu,
-                  width: 20,
-                  height: 20,
-                  color: AppTheme.primaryColor.shade500,
+                child: PopupMenuButton(
+                  child: Image.asset(
+                    AppAssets.menu,
+                    width: 20,
+                    height: 20,
+                    color: AppTheme.primaryColor.shade500,
+                  ),
+                  itemBuilder: (context) => [
+                    const PopupMenuItem(
+                      value: 'edit',
+                      child: Text("Edit"),
+                    ),
+                    PopupMenuItem(
+                      value: 'delete',
+                      child: const Text("Delete"),
+                      onTap: () {
+                        $showLoadingDialog(context, "deleting...");
+                        RecipeFirestoreService().deleteFirestore(recipe.id ?? '');
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
                 ),
-                onPressed: () {},
+                onPressed: null,
                 style: TextButton.styleFrom(
                   minimumSize: const Size(32, 32),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -79,7 +98,7 @@ class ProfileRecipeWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              '${recipe.ingredients.length} Ingredients | ${recipe.cookingTime}',
+              '${recipe.ingredients.length} Ingredient(s) | ${recipe.cookingTime}',
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,

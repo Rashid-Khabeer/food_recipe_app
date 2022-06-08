@@ -250,6 +250,7 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
         context: context,
         arguments: 'Saving...',
       );
+      Navigator.of(context).pop();
       $showSnackBar(context, 'Recipe Added!');
     } catch (e) {
       $showErrorDialog(context, e.toString());

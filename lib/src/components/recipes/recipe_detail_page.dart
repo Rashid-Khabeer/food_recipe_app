@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:food_recipie_app/src/base/assets.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/data/models.dart';
@@ -23,6 +24,7 @@ class RecipeDetailPage extends StatefulWidget {
 
 class _RecipeDetailPageState extends State<RecipeDetailPage> {
   final _scrollController = ScrollController();
+  var _rating = 5.0;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,35 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
           context: context,
           builder: (recipe) {
             return Column(children: [
-              Text(recipe.name, style: kBoldW600f24Style),
+              Row(
+                children: [
+                  Expanded(child: Text(recipe.name, style: kBoldW600f24Style)),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        RatingBar.builder(
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          itemSize: MediaQuery.of(context).size.width / 15,
+                          allowHalfRating: false,
+                          itemCount: 5,
+                          glow: false,
+                          initialRating: _rating,
+                          itemPadding: const EdgeInsets.only(right: 4.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (double rating) {
+                            _rating = rating;
+                          },
+                        ),
+                        const Text("Rate it", style: kBoldW600f24Style,),
+                      ],
+                    ),
+                  ),
+                ], crossAxisAlignment: CrossAxisAlignment.start,
+              ),
               const SizedBox(height: 24),
               SizedBox(
                 height: 200,
