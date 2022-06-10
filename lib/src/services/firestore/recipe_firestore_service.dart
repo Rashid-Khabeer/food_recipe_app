@@ -57,4 +57,36 @@ class RecipeFirestoreService extends AppFirestoreService<RecipeModel> {
         .map((snapshot) =>
             snapshot.docs.map((document) => parseModel(document)).toList());
   }
+
+  Future<bool> updateRating(
+    double rating,
+    String userId,
+    String recipeId,
+  ) async {
+    try {
+      var model = await fetchOneFirestore(recipeId);
+      if (model != null) {
+        var index =
+            model.ratings.indexWhere((element) => element.personId == userId);
+        if (index >= 0) {
+          model.ratings[index].rate = rating;
+          var totalRating = 0.0;
+          for (var rate in model.ratings) {
+            totalRating += rate.rate;
+          }
+          model.rating = totalRating / model.ratings.length;
+        } else {
+          model.rating =
+              model.rating == 0 ? rating : (model.rating + rating) / 2;
+          model.ratings.add(RatingModel(personId: userId, rate: rating));
+        }
+        await updateFirestore(model);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:food_recipie_app/src/base/assets.dart';
+import 'package:food_recipie_app/src/base/modals.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
+import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:food_recipie_app/src/widgets/network_image_widget.dart';
@@ -25,6 +27,17 @@ class RecipeDetailPage extends StatefulWidget {
 class _RecipeDetailPageState extends State<RecipeDetailPage> {
   final _scrollController = ScrollController();
   var _rating = 5.0;
+
+  @override
+  void initState() {
+    var index = widget.recipe.ratings.indexWhere(
+            (element) => element.personId == FirebaseAuthService.userId);
+    if (index >= 0) {
+      _rating = widget.recipe.ratings[index].rate;
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +75,13 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                             Icons.star,
                             color: Colors.amber,
                           ),
-                          onRatingUpdate: (double rating) {
+                          updateOnDrag: true,
+                          onRatingUpdate: (double rating) async {
                             _rating = rating;
+                            $showLoadingDialog(context, 'updating...');
+                            await RecipeFirestoreService().updateRating(
+                                _rating, FirebaseAuthService.userId, recipe.id ?? '');
+                            Navigator.of(context).pop();
                           },
                         ),
                         const Text("Rate it", style: kBoldW600f24Style,),
