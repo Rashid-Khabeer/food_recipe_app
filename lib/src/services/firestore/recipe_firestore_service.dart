@@ -58,7 +58,7 @@ class RecipeFirestoreService extends AppFirestoreService<RecipeModel> {
             snapshot.docs.map((document) => parseModel(document)).toList());
   }
 
-  Future<bool> updateRating(
+  Future<void> updateRating(
     double rating,
     String userId,
     String recipeId,
@@ -81,9 +81,6 @@ class RecipeFirestoreService extends AppFirestoreService<RecipeModel> {
           model.ratings.add(RatingModel(personId: userId, rate: rating));
         }
         await updateFirestore(model);
-        return true;
-      } else {
-        return false;
       }
     } catch (e) {
       rethrow;
