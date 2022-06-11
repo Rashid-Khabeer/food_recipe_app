@@ -3,13 +3,16 @@ import 'package:food_recipie_app/src/base/assets.dart';
 import 'package:food_recipie_app/src/base/nav.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/components/home_view/popular_category_view.dart';
+import 'package:food_recipie_app/src/components/recipes/popular_creator_widget.dart';
+import 'package:food_recipie_app/src/components/recipes/popular_creators_page.dart';
+import 'package:food_recipie_app/src/components/recipes/recipe_widget.dart';
 import 'package:food_recipie_app/src/components/recipes/recipes_page.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
-import 'package:food_recipie_app/src/components/recipes/recipe_widget.dart';
+import 'package:food_recipie_app/src/widgets/loading_animation.dart';
 import 'package:food_recipie_app/src/widgets/simple_stream_builder.dart';
 
 class HomeView extends StatefulWidget {
@@ -173,12 +176,60 @@ class _HomeViewState extends State<HomeView> {
             child: Row(children: [
               Expanded(child: Text('Popular Creators', style: _style)),
               _seeAllButton(
-                () {},
+                    () {
+                  AppNavigation.to(
+                    context,
+                    PopularCreatorsPage(
+                      dataFunction: RecipeFirestoreService().popularCreators,
+                      title: 'Popular Creators',
+                      canPop: true,
+                    ),
+                  );
+                },
               ),
             ]),
           ),
         ),
-        const SliverToBoxAdapter(child: SizedBox(height: 100)),
+        ///TODO Fix See all Popular Creators Page
+        SliverPadding(
+          padding: const EdgeInsets.only(left: 20),
+          sliver: SliverToBoxAdapter(
+            child: SizedBox(
+              height: 130,
+              child: FutureBuilder(
+                builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
+                  return snapshot.hasData ? ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (ctx, i) {
+                      return PopularCreatorWidget(
+                              user: snapshot.data![i],
+                              width: 100,
+                            );
+                    },
+                    itemCount: snapshot.data?.length ?? 0,
+                  ) : const SizedBox();
+                },
+                future: RecipeFirestoreService().popularCreators(),
+              ),
+              // child: FutureBuilder<List<UserModel>>(
+              //   stream: UserFirestoreService().fetchAllFirestore(),
+              //   context: context,
+              //   builder: (List<UserModel> data) {
+              //     return ListView.builder(
+              //       scrollDirection: Axis.horizontal,
+              //       itemBuilder: (ctx, i) {
+              //         return PopularCreatorWidget(
+              //           user: data[i],
+              //           width: 100,
+              //         );
+              //       },
+              //       itemCount: data.length,
+              //     );
+              //   },
+              // ),
+            ),
+          ),
+        ),
         SliverToBoxAdapter(
           child: SizedBox(height: MediaQuery.of(context).padding.bottom),
         ),

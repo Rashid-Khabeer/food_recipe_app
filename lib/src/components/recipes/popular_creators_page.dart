@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipie_app/src/components/recipes/recipe_widget.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
-import 'package:food_recipie_app/src/widgets/simple_stream_builder.dart';
+import 'package:food_recipie_app/src/components/recipes/popular_creator_widget.dart';
 
-class RecipesPage extends StatefulWidget {
-  const RecipesPage({
+class PopularCreatorsPage extends StatefulWidget {
+  const PopularCreatorsPage({
     Key? key,
     required this.dataFunction,
     required this.title,
     required this.canPop,
   }) : super(key: key);
 
-  final Stream<List<RecipeModel>> Function() dataFunction;
+  final Future<List<UserModel>> Function() dataFunction;
   final String title;
   final bool canPop;
 
   @override
-  _RecipesPageState createState() => _RecipesPageState();
+  _PopularCreatorsPageState createState() => _PopularCreatorsPageState();
 }
 
-class _RecipesPageState extends State<RecipesPage> {
+class _PopularCreatorsPageState extends State<PopularCreatorsPage> {
   final _scrollController = ScrollController();
 
   @override
@@ -49,23 +48,18 @@ class _RecipesPageState extends State<RecipesPage> {
               ),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
-            SimpleStreamBuilder<List<RecipeModel>>.simplerSliver(
-              stream: widget.dataFunction(),
-              context: context,
-              builder: (data) {
-                return SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (ctx, index) {
-                      return RecipeWidget(
-                        recipe: data[index],
-                        padding: const EdgeInsets.only(bottom: 16),
-                      );
-                    },
-                    childCount: data.length,
-                  ),
-                );
-              },
-            ),
+            FutureBuilder(builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
+              return snapshot.hasData ? SliverList(
+                delegate: SliverChildBuilderDelegate(
+                      (ctx, index) {
+                    return PopularCreatorWidget(
+                      user: snapshot.data![index],
+                    );
+                  },
+                  childCount: snapshot.data?.length,
+                ),
+              ) : const SizedBox();
+            }, future: widget.dataFunction(),)
           ],
         ),
       ),
