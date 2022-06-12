@@ -13,7 +13,7 @@ class NetworkImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _noDataWidget = noImageWidget ?? const Text('No Image');
+    Widget _noDataWidget = noImageWidget ?? const Center(child: Text('No Image'),);
     if (url?.isEmpty ?? true) {
       return _noDataWidget;
     }

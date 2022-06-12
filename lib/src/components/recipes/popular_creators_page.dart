@@ -22,6 +22,18 @@ class PopularCreatorsPage extends StatefulWidget {
 
 class _PopularCreatorsPageState extends State<PopularCreatorsPage> {
   final _scrollController = ScrollController();
+  List<UserModel> _users = [];
+
+  fetchData() async{
+    _users = await widget.dataFunction();
+    setState(() {});
+  }
+
+  @override
+  initState(){
+    fetchData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,18 +60,17 @@ class _PopularCreatorsPageState extends State<PopularCreatorsPage> {
               ),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
-            FutureBuilder(builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
-              return snapshot.hasData ? SliverList(
-                delegate: SliverChildBuilderDelegate(
-                      (ctx, index) {
-                    return PopularCreatorWidget(
-                      user: snapshot.data![index],
-                    );
-                  },
-                  childCount: snapshot.data?.length,
-                ),
-              ) : const SizedBox();
-            }, future: widget.dataFunction(),)
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                    (ctx, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: PopularCreatorBoxWidget(user: _users[index]),
+                  );
+                },
+                childCount: _users.length,
+              ),
+            ),
           ],
         ),
       ),

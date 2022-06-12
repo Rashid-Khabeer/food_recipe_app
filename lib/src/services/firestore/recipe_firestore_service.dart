@@ -87,7 +87,11 @@ class RecipeFirestoreService extends AppFirestoreService<RecipeModel> {
     }
   }
 
-  Future<List<UserModel>> popularCreators() async {
+  // Future<List<RecipeModel>> search(String text, String category) {
+  //   fetchAllFirestore()
+  // }
+
+  Future<List<UserModel>> popularCreators([int? limit]) async {
     var recipes = await fetch();
     // group recipes with users
     Map<String, List<RecipeModel>> recipesMap = {};
@@ -141,6 +145,6 @@ class RecipeFirestoreService extends AppFirestoreService<RecipeModel> {
       }
     }
 
-    return users;
+    return limit != null ? users.length > limit ? users.sublist(0, limit) : users : users;
   }
 }
