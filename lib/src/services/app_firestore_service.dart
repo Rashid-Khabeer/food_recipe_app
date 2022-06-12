@@ -6,9 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 
-part 'firestore/user_firestore_service.dart';
-
 part 'firestore/recipe_firestore_service.dart';
+
+part 'firestore/user_firestore_service.dart';
 
 abstract class AppFirestoreService<T extends Model> {
   String get collectionName;
@@ -39,6 +39,12 @@ abstract class AppFirestoreService<T extends Model> {
       .snapshots()
       .map((snapshot) =>
           snapshot.docs.map((document) => parseModel(document)).toList());
+
+  Future<List<T>> fetchAllFirestoreFuture() => FirebaseFirestore.instance
+      .collection(collectionName)
+      .get()
+      .then((value) =>
+          value.docs.map((document) => parseModel(document)).toList());
 
   Stream<List<T>> fetchAllSortedFirestore() => FirebaseFirestore.instance
       .collection(collectionName)

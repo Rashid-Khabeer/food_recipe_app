@@ -34,7 +34,7 @@ class _PopularCreatorWidgetState extends State<PopularCreatorWidget> {
               width: 75,
               height: 75,
               child: CircleAvatar(
-                backgroundColor: Colors.black12,
+                backgroundColor: AppTheme.neutralColor.shade100,
                 backgroundImage: NetworkImage(widget.user.profilePicture ?? ''),
                 child: widget.user.profilePicture!.isEmpty
                     ? Text(
@@ -92,7 +92,7 @@ class _PopularCreatorBoxWidgetState extends State<PopularCreatorBoxWidget> {
             margin: const EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: const [BoxShadow(color: Colors.black12)]
+                color: AppTheme.neutralColor.shade100,
                 // image: DecorationImage(image: NetworkImage(widget.user.profilePicture ?? ''), fit: BoxFit.cover, )
                 ),
             child: ClipRRect(

@@ -13,6 +13,7 @@ import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:food_recipie_app/src/widgets/simple_stream_builder.dart';
+import '../recipes/recipe_search_page.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -51,6 +52,7 @@ class _HomeViewState extends State<HomeView> {
           padding: const EdgeInsets.all(8.0),
           sliver: SliverToBoxAdapter(
             child: AppTextField(
+              readonly: true,
               prefixIcon: Padding(
                 padding: const EdgeInsets.fromLTRB(18, 0, 14, 0),
                 child: Image.asset(
@@ -61,6 +63,9 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               hint: 'Search recipes',
+              onTap: () {
+                AppNavigation.to(context, const RecipeSearchPage());
+              },
             ),
           ),
         ),

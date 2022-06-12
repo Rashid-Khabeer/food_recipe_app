@@ -37,6 +37,7 @@ class _AppDropDownWidgetState<T> extends State<AppDropDownWidget<T>> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
+      if(widget.label.isNotEmpty)
       Padding(
         padding: const EdgeInsets.only(
           left: 10,

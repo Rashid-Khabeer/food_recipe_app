@@ -118,10 +118,13 @@ class _RecipeWidgetState extends State<RecipeWidget> {
                         borderRadius: BorderRadius.circular(100),
                         child: NetworkImageWidget(
                           url: user.profilePicture,
-                          noImageWidget: Icon(
-                            CupertinoIcons.person,
-                            size: 15,
-                            color: AppTheme.primaryColor.shade500,
+                          noImageWidget: Container(
+                            color: AppTheme.neutralColor.shade100,
+                            child: Icon(
+                              CupertinoIcons.person,
+                              size: 15,
+                              color: AppTheme.primaryColor.shade500,
+                            ),
                           ),
                         ),
                       ),
