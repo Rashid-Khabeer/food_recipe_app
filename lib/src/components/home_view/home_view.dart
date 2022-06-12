@@ -189,7 +189,6 @@ class _HomeViewState extends State<HomeView> {
             ]),
           ),
         ),
-        ///TODO Fix See all Popular Creators Page
         SliverPadding(
           padding: const EdgeInsets.only(left: 20),
           sliver: SliverToBoxAdapter(
