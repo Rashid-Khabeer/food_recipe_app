@@ -148,7 +148,7 @@ class SimpleStreamBuilder<T> extends StreamBuilder<T> {
             child: Center(child: Text('No Connection was found')),
           ),
           noDataChild: const SliverToBoxAdapter(
-            child: Center(child: Text('No Data was found')),
+            child: Center(child: Text('No Results')),
           ),
           unknownChild: const SliverToBoxAdapter(
             child: Center(child: Text('Unknown Error Occurred')),
