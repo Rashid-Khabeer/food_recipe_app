@@ -26,7 +26,6 @@ class _PopularCreatorWidgetState extends State<PopularCreatorWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print(widget.user.id??"");
         AppNavigation.to(
           context,
           RecipesPage(
