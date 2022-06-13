@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
@@ -23,7 +24,7 @@ class _RecipeFormViewState extends State<RecipeFormView> {
   final _scrollController = ScrollController();
   var date = DateTime.utc(2022, 1, 1, 0, 0, 0, 0, 0);
 
-  final Map<String, bool> _selectedCategories = {};
+  final _selectedCategories = <String>[];
 
   @override
   void initState() {
@@ -33,9 +34,10 @@ class _RecipeFormViewState extends State<RecipeFormView> {
 
   buildSelectedCategoryMap() {
     for (var cat in kRecipeCategories) {
-      _selectedCategories[cat] = false;
+      if (widget.recipe.category.contains(cat)) {
+        _selectedCategories.add(cat);
+      }
     }
-    setState(() {});
   }
 
   @override
@@ -111,16 +113,20 @@ class _RecipeFormViewState extends State<RecipeFormView> {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (ctx, index) {
+                  final _cat = kRecipeCategories[index];
+                  final _isSelected = _selectedCategories.contains(_cat);
                   return CheckboxListTile(
-                    title: Text(kRecipeCategories[index]),
-                    value: _selectedCategories[kRecipeCategories[index]],
+                    title: Text(_cat),
+                    value: _isSelected,
+                    activeColor: AppTheme.primaryColor.shade500,
                     onChanged: (bool? value) {
-                      setState(() {
-                        _selectedCategories[kRecipeCategories[index]] =
-                            value ?? false;
-                      });
-                      widget.recipe.category =
-                          _selectedCategories.keys.toList();
+                      if (_isSelected) {
+                        _selectedCategories.remove(_cat);
+                      } else {
+                        _selectedCategories.add(_cat);
+                      }
+                      setState(() {});
+                      widget.recipe.category = _selectedCategories;
                       widget.onChanged(widget.recipe);
                     },
                   );

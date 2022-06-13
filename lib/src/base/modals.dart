@@ -86,3 +86,56 @@ $showErrorDialog(
     },
   );
 }
+
+Future<bool> $showConfirmationDialog(
+  BuildContext context,
+  String content,
+) async {
+  final _result = await showDialog(
+    context: context,
+    builder: (ctx) {
+      return AlertDialog(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10, top: 15),
+              child: Text(
+                content,
+                style: const TextStyle(fontFamily: 'quicksand', fontSize: 13),
+              ),
+            ),
+            Row(children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('Yes'),
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: const Size(0, 35),
+                    padding: EdgeInsets.zero,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 5),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('No'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(0, 35),
+                    padding: EdgeInsets.zero,
+                  ),
+                ),
+              ),
+            ]),
+          ],
+        ),
+      );
+    },
+  );
+  return _result ?? false;
+}

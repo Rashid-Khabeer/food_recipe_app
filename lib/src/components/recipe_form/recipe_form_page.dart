@@ -98,6 +98,7 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
             AppTextField(
               hint: 'Recipe Name',
               label: 'Recipe Name',
+              value: _recipe.name,
               validator: InputValidator.required(
                 message: 'Name is required',
               ),
@@ -250,7 +251,6 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
         context: context,
         arguments: 'Saving...',
       );
-      Navigator.of(context).pop();
       $showSnackBar(context, 'Recipe Added!');
     } catch (e) {
       $showErrorDialog(context, e.toString());

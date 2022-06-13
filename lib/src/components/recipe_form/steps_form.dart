@@ -86,6 +86,7 @@ class _StepsFormWidgetState extends State<StepsFormWidget>
                   validator: InputValidator.required(
                     message: 'Step is required',
                   ),
+                  value: widget.controller.steps[i].step,
                   onChanged: (value) {
                     widget.controller.steps[i].step = value ?? '';
                   },

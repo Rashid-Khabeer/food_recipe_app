@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/assets.dart';
 import 'package:food_recipie_app/src/base/modals.dart';
+import 'package:food_recipie_app/src/base/nav.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
+import 'package:food_recipie_app/src/components/recipe_form/recipe_form_page.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/network_image_widget.dart';
 import 'package:food_recipie_app/src/widgets/show_rating_widget.dart';
 
-class ProfileRecipeWidget extends StatelessWidget {
+class ProfileRecipeWidget extends StatefulWidget {
   const ProfileRecipeWidget({
     Key? key,
     required this.recipe,
   }) : super(key: key);
+
   final RecipeModel recipe;
 
+  @override
+  State<ProfileRecipeWidget> createState() => _ProfileRecipeWidgetState();
+}
+
+class _ProfileRecipeWidgetState extends State<ProfileRecipeWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +34,7 @@ class ProfileRecipeWidget extends StatelessWidget {
       child: Stack(children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: NetworkImageWidget(url: recipe.imagesList.first),
+          child: NetworkImageWidget(url: widget.recipe.imagesList.first),
         ),
         Align(
           alignment: Alignment.bottomCenter,
@@ -51,7 +59,7 @@ class ProfileRecipeWidget extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 8, 18),
           child: Column(children: [
             Row(children: [
-              ShowRatingWidget(rating: recipe.rating),
+              ShowRatingWidget(rating: widget.recipe.rating),
               const Spacer(),
               TextButton(
                 child: PopupMenuButton(
@@ -61,19 +69,27 @@ class ProfileRecipeWidget extends StatelessWidget {
                     height: 20,
                     color: AppTheme.primaryColor.shade500,
                   ),
+                  onSelected: (value) {
+                    switch (value) {
+                      case 0:
+                        AppNavigation.to(
+                          context,
+                          RecipeFormPage(recipeModel: widget.recipe),
+                        );
+                        break;
+                      case 1:
+                        _deleteAction();
+                        break;
+                    }
+                  },
                   itemBuilder: (context) => [
                     const PopupMenuItem(
-                      value: 'edit',
+                      value: 0,
                       child: Text("Edit"),
                     ),
-                    PopupMenuItem(
-                      value: 'delete',
-                      child: const Text("Delete"),
-                      onTap: () {
-                        $showLoadingDialog(context, "deleting...");
-                        RecipeFirestoreService().deleteFirestore(recipe.id ?? '');
-                        Navigator.of(context).pop();
-                      },
+                    const PopupMenuItem(
+                      value: 1,
+                      child: Text("Delete"),
                     ),
                   ],
                 ),
@@ -92,13 +108,13 @@ class ProfileRecipeWidget extends StatelessWidget {
             ]),
             const Spacer(),
             Text(
-              recipe.name,
+              widget.recipe.name,
               style: kBoldW600f24Style.copyWith(color: Colors.white),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              '${recipe.ingredients.length} Ingredient(s) | ${recipe.cookingTime}',
+              '${widget.recipe.ingredients.length} Ingredient(s) | ${widget.recipe.cookingTime}',
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
@@ -109,5 +125,22 @@ class ProfileRecipeWidget extends StatelessWidget {
         ),
       ], fit: StackFit.expand),
     );
+  }
+
+  void _deleteAction() async {
+    if (!(await $showConfirmationDialog(
+      context,
+      'Are you sure you want to delete this recipe?',
+    ))) {
+      return;
+    }
+    try {
+      $showLoadingDialog(context, 'Deleting...');
+      await RecipeFirestoreService().deleteFirestore(widget.recipe.id ?? '');
+      Navigator.of(context).pop();
+    } catch (_) {
+      $showSnackBar(context, 'Delete failed!');
+      Navigator.of(context).pop();
+    }
   }
 }
