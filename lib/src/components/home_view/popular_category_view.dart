@@ -62,22 +62,25 @@ class _PopularCategoryViewState extends State<PopularCategoryView> {
         ),
       ),
       const SizedBox(height: 16),
-      SimpleStreamBuilder<List<RecipeModel>>.simpler(
-        stream: RecipeFirestoreService().fetchByCategory(_selected),
-        context: context,
-        builder: (data) {
-          return ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (ctx, i) {
-              return RecipeWidget(
-                recipe: data[i],
-                width: 280,
-                padding: const EdgeInsets.only(right: 16),
-              );
-            },
-            itemCount: data.length,
-          );
-        },
+      SizedBox(
+        height: 260,
+        child: SimpleStreamBuilder<List<RecipeModel>>.simpler(
+          stream: RecipeFirestoreService().fetchByCategory(_selected),
+          context: context,
+          builder: (data) {
+            return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (ctx, i) {
+                return RecipeWidget(
+                  recipe: data[i],
+                  width: 280,
+                  padding: const EdgeInsets.only(right: 16),
+                );
+              },
+              itemCount: data.length,
+            );
+          },
+        ),
       ),
     ]);
   }
