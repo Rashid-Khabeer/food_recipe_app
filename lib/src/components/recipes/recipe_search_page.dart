@@ -279,7 +279,6 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> {
   }
 }
 
-///TODO Add Sorting Type Selection
 class SortingDialog extends StatefulWidget {
   const SortingDialog({
     Key? key,
