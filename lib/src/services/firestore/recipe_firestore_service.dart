@@ -58,6 +58,16 @@ class RecipeFirestoreService extends AppFirestoreService<RecipeModel> {
             snapshot.docs.map((document) => parseModel(document)).toList());
   }
 
+  Stream<List<RecipeModel>> fetchByCreator(String creator) {
+    return FirebaseFirestore.instance
+        .collection(collectionName)
+        .where('userId', isEqualTo: creator)
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map((snapshot) =>
+        snapshot.docs.map((document) => parseModel(document)).toList());
+  }
+
   Future<void> updateRating(
     double rating,
     String userId,
@@ -86,10 +96,6 @@ class RecipeFirestoreService extends AppFirestoreService<RecipeModel> {
       rethrow;
     }
   }
-
-  // Future<List<RecipeModel>> search(String text, String category) {
-  //   fetchAllFirestore()
-  // }
 
   Future<List<UserModel>> popularCreators([int? limit]) async {
     var recipes = await fetch();

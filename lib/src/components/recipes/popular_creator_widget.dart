@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipie_app/src/base/nav.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
+import 'package:food_recipie_app/src/components/recipes/recipes_page.dart';
 import 'package:food_recipie_app/src/data/models.dart';
+import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/network_image_widget.dart';
 
@@ -22,8 +25,18 @@ class _PopularCreatorWidgetState extends State<PopularCreatorWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      ///TODO Implement Navigation
-      onTap: () {},
+      onTap: () {
+        print(widget.user.id??"");
+        AppNavigation.to(
+          context,
+          RecipesPage(
+            dataFunction: () =>
+                RecipeFirestoreService().fetchByCreator(widget.user.id ?? ""),
+            title: "Recipes By Creator",
+            canPop: true,
+          ),
+        );
+      },
       child: SizedBox(
         width: widget.width,
         child: Column(
@@ -79,8 +92,15 @@ class _PopularCreatorBoxWidgetState extends State<PopularCreatorBoxWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        ///TODO Navigation
-        // AppNavigation.to(context, RecipeDetailPage(recipe: widget.recipe));
+        AppNavigation.to(
+          context,
+          RecipesPage(
+            dataFunction: () =>
+                RecipeFirestoreService().fetchByCreator(widget.user.id ?? ""),
+            title: "Recipes By Creator",
+            canPop: true,
+          ),
+        );
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
