@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:food_recipie_app/src/base/modals.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
-import 'package:food_recipie_app/src/widgets/app_dropdown_widget.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 
@@ -47,124 +45,91 @@ class _RecipeFormViewState extends State<RecipeFormView> {
         controller: _scrollController,
         title: 'Recipe Form',
       ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
+      body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(children: [
-          const Text('Recipe Form', style: kBoldW600f24Style),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
-            child: AppTextField(
-              hint: 'Serves',
-              label: 'Serves',
-              textEditingController: TextEditingController(
-                text: widget.recipe.serves,
-              ),
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.number,
-              onChanged: (value) {
-                widget.recipe.serves = value ?? '';
-                widget.onChanged(widget.recipe);
-              },
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            const SliverToBoxAdapter(
+              child: Text('Recipe Form', style: kBoldW600f24Style),
             ),
-          ),
-          AppTextField(
-            hint: 'Cooking time',
-            label: 'Cooking time',
-            textEditingController: TextEditingController(
-              text: widget.recipe.cookingTime,
-            ),
-            textInputAction: TextInputAction.next,
-            onTap: () async {
-              await _showDialog(
-                CupertinoDatePicker(
-                  initialDateTime: date,
-                  mode: CupertinoDatePickerMode.time,
-                  use24hFormat: true,
-                  onDateTimeChanged: (DateTime value) {
-                    widget.recipe.cookingTime = value.hour.toString() +
-                        'H ' +
-                        value.minute.toString() +
-                        'M';
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
+              sliver: SliverToBoxAdapter(
+                child: AppTextField(
+                  hint: 'Serves',
+                  label: 'Serves',
+                  textEditingController: TextEditingController(
+                    text: widget.recipe.serves,
+                  ),
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    widget.recipe.serves = value ?? '';
                     widget.onChanged(widget.recipe);
                   },
                 ),
-              );
-              setState(() {});
-            },
-            readonly: true,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Text(
-              'Select Categories',
-              style: kBoldW600f16Style.copyWith(color: Colors.black),
+              ),
             ),
-          ),
-          ///TODO Fix Category Scrolling
-          ListView.builder(
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return CheckboxListTile(
-                title: Text(kRecipeCategories[index]),
-                value: _selectedCategories[kRecipeCategories[index]],
-                onChanged: (bool? value) {
-                  setState(() {
-                    _selectedCategories[kRecipeCategories[index]] =
-                        value ?? false;
-                  });
-                  widget.recipe.category = _selectedCategories.keys.toList();
-                  widget.onChanged(widget.recipe);
+            SliverToBoxAdapter(
+              child: AppTextField(
+                hint: 'Cooking time',
+                label: 'Cooking time',
+                textEditingController: TextEditingController(
+                  text: widget.recipe.cookingTime,
+                ),
+                textInputAction: TextInputAction.next,
+                onTap: () async {
+                  await _showDialog(
+                    CupertinoDatePicker(
+                      initialDateTime: date,
+                      mode: CupertinoDatePickerMode.time,
+                      use24hFormat: true,
+                      onDateTimeChanged: (DateTime value) {
+                        widget.recipe.cookingTime = value.hour.toString() +
+                            'H ' +
+                            value.minute.toString() +
+                            'M';
+                        widget.onChanged(widget.recipe);
+                      },
+                    ),
+                  );
+                  setState(() {});
                 },
-              );
-            },
-            itemCount: _selectedCategories.length,
-          ),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(vertical: 20),
-          //   child: AppDropDownWidget<String>(
-          //     hint: 'Category',
-          //     label: 'Category',
-          //     items: kRecipeCategories
-          //         .map(
-          //           (e) => DropdownMenuItem(
-          //             child: Text(e),
-          //             value: e,
-          //           ),
-          //         )
-          //         .toList(),
-          //     onChanged: (value) {
-          //       if (value?.isEmpty ?? true) {
-          //         return;
-          //       }
-          //       if (widget.recipe.category.contains(value)) {
-          //         $showSnackBar(context, 'Already selected');
-          //         return;
-          //       }
-          //       widget.recipe.category.add(value!);
-          //       widget.onChanged(widget.recipe);
-          //       setState(() {});
-          //     },
-          //   ),
-          // ),
-          //
-          // for (var cat in widget.recipe.category)
-          //   Padding(
-          //     padding: const EdgeInsets.symmetric(vertical: 3),
-          //     child: Row(children: [
-          //       Container(
-          //         width: 7,
-          //         height: 7,
-          //         margin: const EdgeInsets.only(right: 7),
-          //         decoration: const BoxDecoration(
-          //           color: Colors.black,
-          //           shape: BoxShape.circle,
-          //         ),
-          //       ),
-          //       Text(cat),
-          //     ]),
-          //   ),
-        ], crossAxisAlignment: CrossAxisAlignment.start),
+                readonly: true,
+              ),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.only(top: 10.0),
+              sliver: SliverToBoxAdapter(
+                child: Text(
+                  'Select Categories',
+                  style: kBoldW600f16Style.copyWith(color: Colors.black),
+                ),
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (ctx, index) {
+                  return CheckboxListTile(
+                    title: Text(kRecipeCategories[index]),
+                    value: _selectedCategories[kRecipeCategories[index]],
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _selectedCategories[kRecipeCategories[index]] =
+                            value ?? false;
+                      });
+                      widget.recipe.category =
+                          _selectedCategories.keys.toList();
+                      widget.onChanged(widget.recipe);
+                    },
+                  );
+                },
+                childCount: _selectedCategories.length,
+              ),
+            )
+          ],
+        ),
       ),
       persistentFooterButtons: [
         ElevatedButton(

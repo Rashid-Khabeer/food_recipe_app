@@ -47,6 +47,7 @@ class _AppDropDownWidgetState<T> extends State<AppDropDownWidget<T>> {
       ),
       DropdownButtonFormField<T>(
         items: widget.items,
+        isExpanded: true,
         value: _value,
         onSaved: widget.onSaved,
         validator: widget.validator,
