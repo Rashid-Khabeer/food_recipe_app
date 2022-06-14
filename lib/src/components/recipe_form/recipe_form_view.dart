@@ -24,20 +24,9 @@ class _RecipeFormViewState extends State<RecipeFormView> {
   final _scrollController = ScrollController();
   var date = DateTime.utc(2022, 1, 1, 0, 0, 0, 0, 0);
 
-  final _selectedCategories = <String>[];
-
   @override
   void initState() {
     super.initState();
-    buildSelectedCategoryMap();
-  }
-
-  buildSelectedCategoryMap() {
-    for (var cat in kRecipeCategories) {
-      if (widget.recipe.category.contains(cat)) {
-        _selectedCategories.add(cat);
-      }
-    }
   }
 
   @override
@@ -114,24 +103,23 @@ class _RecipeFormViewState extends State<RecipeFormView> {
               delegate: SliverChildBuilderDelegate(
                 (ctx, index) {
                   final _cat = kRecipeCategories[index];
-                  final _isSelected = _selectedCategories.contains(_cat);
+                  final _isSelected = widget.recipe.category.contains(_cat);
                   return CheckboxListTile(
                     title: Text(_cat),
                     value: _isSelected,
                     activeColor: AppTheme.primaryColor.shade500,
                     onChanged: (bool? value) {
                       if (_isSelected) {
-                        _selectedCategories.remove(_cat);
+                        widget.recipe.category.remove(_cat);
                       } else {
-                        _selectedCategories.add(_cat);
+                        widget.recipe.category.add(_cat);
                       }
                       setState(() {});
-                      widget.recipe.category = _selectedCategories;
                       widget.onChanged(widget.recipe);
                     },
                   );
                 },
-                childCount: _selectedCategories.length,
+                childCount: kRecipeCategories.length,
               ),
             )
           ],

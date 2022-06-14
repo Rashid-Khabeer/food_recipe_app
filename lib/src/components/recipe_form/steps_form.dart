@@ -72,7 +72,9 @@ class _StepsFormWidgetState extends State<StepsFormWidget>
   List<Widget> _buildData() {
     var _list = <Widget>[];
     for (var i = 0; i < widget.controller.steps.length; i++) {
-      var _isImageSelected = widget.controller.steps[i].local != null;
+      var _isImageSelected =
+          (widget.controller.steps[i].image?.isNotEmpty ?? false) ||
+              (widget.controller.steps[i].local?.isNotEmpty ?? false);
       _list.add(
         Padding(
           padding: EdgeInsets.only(
@@ -99,27 +101,37 @@ class _StepsFormWidgetState extends State<StepsFormWidget>
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Stack(children: [
-                    if (_isImageSelected)
+                    if (widget.controller.steps[i].local != null)
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.file(
                           File(widget.controller.steps[i].local!),
                           fit: BoxFit.cover,
                         ),
-                      ),
-                    if (!_isImageSelected)
-                      const Positioned(
-                        top: 10,
-                        left: 16,
-                        child: Text(
-                          'Upload photo (Optional)',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: Colors.white,
+                      )
+                    else ...[
+                      if (widget.controller.steps[i].image?.isNotEmpty ?? false)
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            widget.controller.steps[i].image!,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      else
+                        const Positioned(
+                          top: 10,
+                          left: 16,
+                          child: Text(
+                            'Upload photo (Optional)',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
+                    ],
                     Positioned(
                       top: 10,
                       right: 8,

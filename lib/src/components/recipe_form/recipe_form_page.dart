@@ -53,7 +53,7 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
           userId: FirebaseAuthService.userId,
           category: [],
           cookingTime: '0 H',
-          ingredients: [IngredientsModel(name: '', quantity: '', unit: '')],
+          ingredients: [IngredientsModel(name: '', quantity: '', unit: null)],
           ratings: [],
           savedUsersIds: [],
           serves: '1',
@@ -61,6 +61,7 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
           timestamp: Timestamp.now(),
         );
     _imageController = RecipeImageController(
+      url: _recipe.imagesList.isEmpty ? null : _recipe.imagesList.first,
       onChanged: (image) => _mainImage = image,
     );
     _ingredientsController = IngredientsController(
@@ -220,9 +221,11 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
       setState(() {});
       return;
     }
-    if (_mainImage?.isEmpty ?? true) {
-      $showSnackBar(context, 'Main photo is required');
-      return;
+    if (!_isEdit) {
+      if (_mainImage?.isEmpty ?? true) {
+        $showSnackBar(context, 'Main photo is required');
+        return;
+      }
     }
     if (_recipe.serves.isEmpty) {
       $showSnackBar(context, 'Serve is required');
@@ -247,11 +250,16 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
     _formKey.currentState!.save();
     try {
       await Awaiter.process(
-        future: _save(),
+        future: _isEdit ? _update() : _save(),
         context: context,
         arguments: 'Saving...',
       );
-      $showSnackBar(context, 'Recipe Added!');
+      if (_isEdit) {
+        $showSnackBar(context, 'Recipe Updated!');
+        Navigator.of(context).pop();
+      } else {
+        $showSnackBar(context, 'Recipe Added!');
+      }
     } catch (e) {
       $showErrorDialog(context, e.toString());
     }
@@ -268,6 +276,24 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
         }
       }
       await RecipeFirestoreService().insertFirestore(_recipe);
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<void> _update() async {
+    try {
+      if (_mainImage != null) {
+        final _uploaded = await FirebaseStorageService.uploadFile(_mainImage!);
+        _recipe.imagesList.add(_uploaded);
+      }
+      for (var i = 0; i < _recipe.steps.length; i++) {
+        var _step = _recipe.steps[i];
+        if (_step.local?.isNotEmpty ?? false) {
+          _step.image = await FirebaseStorageService.uploadFile(_step.local!);
+        }
+      }
+      await RecipeFirestoreService().updateFirestore(_recipe);
     } catch (_) {
       rethrow;
     }

@@ -15,7 +15,7 @@ class IngredientsController extends ChangeNotifier {
   final void Function(List<IngredientsModel>) onChanged;
 
   void _add() {
-    ingredients.add(IngredientsModel(name: '', quantity: '', unit: ''));
+    ingredients.add(IngredientsModel(name: '', quantity: '', unit: null));
     notifyListeners();
     onChanged(ingredients);
   }

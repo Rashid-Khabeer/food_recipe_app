@@ -8,9 +8,11 @@ import 'package:reusables/reusables.dart';
 
 class RecipeImageController extends ChangeNotifier {
   RecipeImageController({
+    this.url,
     required this.onChanged,
   });
 
+  final String? url;
   final void Function(String) onChanged;
   XFile? _pickedFile;
 
@@ -51,27 +53,37 @@ class _RecipeImagePickerState extends State<RecipeImagePicker>
         borderRadius: BorderRadius.circular(12),
       ),
       child: Stack(children: [
-        if (_isImageSelected)
+        if (widget.controller._pickedFile != null)
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.file(
               File(widget.controller._pickedFile!.path),
               fit: BoxFit.cover,
             ),
-          ),
-        if (!_isImageSelected)
-          const Positioned(
-            top: 10,
-            left: 16,
-            child: Text(
-              'Main Photo (required)',
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 16,
-                color: Colors.white,
+          )
+        else ...[
+          if (widget.controller.url?.isNotEmpty ?? false)
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                widget.controller.url!,
+                fit: BoxFit.cover,
               ),
-            ),
-          ),
+            )
+          else
+            const Positioned(
+              top: 10,
+              left: 16,
+              child: Text(
+                'Main Photo (required)',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+            )
+        ],
         Positioned(
           top: 10,
           right: 8,
