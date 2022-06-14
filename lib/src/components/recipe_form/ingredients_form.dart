@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/app_dropdown_widget.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:reusables/reusables.dart';
@@ -40,7 +41,7 @@ class IngredientsFormWidget extends ControlledWidget<IngredientsController> {
 }
 
 class _IngredientsFormWidgetState extends State<IngredientsFormWidget>
-    with ControlledStateMixin {
+    with ControlledStateMixin, LocalizedStateMixin {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -48,9 +49,9 @@ class _IngredientsFormWidgetState extends State<IngredientsFormWidget>
       const SizedBox(height: 1),
       GestureDetector(
         onTap: widget.controller._add,
-        child: Row(children: const [
-          Icon(Icons.add),
-          Text('Add new Ingredient', style: kBoldW600f24Style),
+        child: Row(children: [
+          const Icon(Icons.add),
+          Text(lang.add_new_ingredient, style: kBoldW600f24Style),
         ]),
       ),
       const SizedBox(height: 13),
@@ -66,7 +67,7 @@ class _IngredientsFormWidgetState extends State<IngredientsFormWidget>
           Expanded(
             flex: 3,
             child: AppTextField(
-              hint: 'Item name',
+              hint: lang.item_name,
               validator: InputValidator.required(
                 message: 'Name is required',
               ),

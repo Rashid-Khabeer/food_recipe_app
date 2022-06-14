@@ -6,6 +6,7 @@ import 'package:food_recipie_app/src/components/recipes/recipe_widget.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 
 import '../../widgets/app_dropdown_widget.dart';
@@ -22,7 +23,7 @@ enum OrderBy {
   duration,
 }
 
-class _RecipeSearchPageState extends State<RecipeSearchPage> {
+class _RecipeSearchPageState extends State<RecipeSearchPage> with LocalizedStateMixin {
   List<RecipeModel> recipes = [];
   List<RecipeModel> filteredRecipes = [];
   List<String> _selectedCategories = [];
@@ -156,7 +157,7 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> {
                   color: AppTheme.neutralColor.shade200,
                 ),
               ),
-              hint: 'Search recipes',
+              hint: lang.search_recipe,
                onChanged: (value) {
                 filteredRecipes = filter();
                 setState(() {});
@@ -165,7 +166,7 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> {
             const SizedBox(height: 17),
             _buildTile(
               icon: AppAssets.profile,
-              title: "Category",
+              title: lang.category,
               text: _selectedCategories.isNotEmpty
                   ? _selectedCategories[0] +
                       (_selectedCategories.length > 1
@@ -178,7 +179,7 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> {
             const SizedBox(height: 9),
             _buildTile(
               icon: AppAssets.profile,
-              title: "Order By",
+              title: lang.order_by,
               text: _orderBy != null
                   ? _orderBy == OrderBy.rating
                       ? "Rating"
@@ -297,7 +298,7 @@ class SortingDialog extends StatefulWidget {
   _SortingDialogState createState() => _SortingDialogState();
 }
 
-class _SortingDialogState extends State<SortingDialog> {
+class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin {
   final Map<String, bool> _checkedCategories = {};
   OrderBy? _selectedOrderBy;
 
@@ -348,7 +349,7 @@ class _SortingDialogState extends State<SortingDialog> {
                     }),
               ),
               Text(
-                'Order By:',
+                lang.order_by + ':',
                 style: kBoldW600f16Style.copyWith(color: AppTheme.primaryColor),
               ),
               Padding(
@@ -370,13 +371,13 @@ class _SortingDialogState extends State<SortingDialog> {
                     setState(() {});
                   },
                   value: _selectedOrderBy,
-                  hint: "Select type",
+                  hint: lang.select_type,
                   onSaved: (value) {},
                   label: '',
                 ),
               ),
               Text(
-                'Select Categories:',
+                lang.select_categories + ':',
                 style: kBoldW600f16Style.copyWith(color: AppTheme.primaryColor),
               ),
               Expanded(
@@ -411,27 +412,6 @@ class _SortingDialogState extends State<SortingDialog> {
                   ),
                 ),
               ),
-              // ElevatedButton(
-              //   title: 'Proceed',
-              //   icon: CupertinoIcons.arrowtriangle_right_fill,
-              //   onTap: () async {
-              //     if (toLocales.isNotEmpty) {
-              //       await addUser();
-              //       Navigator.of(context).pop();
-              //       Navigator.of(context).push(MaterialPageRoute(
-              //         builder: (context) => DownloadPage(),
-              //       ));
-              //     }
-              //   },
-              // ),
-              // Container(
-              //   height: 30,
-              //   child: Center(
-              //       child: Text(
-              //         'Please select atleast one locale to proceed.',
-              //         style: TextStyle(color: defaultColorEditor),
-              //       )),
-              // ),
             ],
           ),
         ),

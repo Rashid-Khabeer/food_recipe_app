@@ -5,6 +5,7 @@ import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/services/firebase_storage_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:reusables/reusables.dart';
@@ -21,7 +22,7 @@ class EditProfilePage extends StatefulWidget {
   _EditProfilePageState createState() => _EditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class _EditProfilePageState extends State<EditProfilePage> with LocalizedStateMixin {
   final _formKey = GlobalKey<FormState>();
   var _autoValidateMode = AutovalidateMode.disabled;
 
@@ -43,7 +44,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Edit Profile',
+        title: lang.edit_profile,
         controller: _scrollController,
       ),
       body: SingleChildScrollView(
@@ -53,7 +54,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           key: _formKey,
           autovalidateMode: _autoValidateMode,
           child: Column(children: [
-            const Text('Edit Profile', style: kBoldW600f24Style),
+            Text(lang.edit_profile, style: kBoldW600f24Style),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
               child: Center(
@@ -62,8 +63,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             AppTextField(
               textEditingController: _nameController,
-              hint: 'Name',
-              label: 'Name',
+              hint: lang.name,
+              label: lang.name,
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.name,
               onSaved: (value) => widget.user.name = value ?? '',
@@ -76,7 +77,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               textEditingController: _bioController,
               hint: 'Enter Bio',
               onSaved: (value) => widget.user.bio = value ?? '',
-              label: 'Bio',
+              label: lang.bio,
               maxLines: 3,
               textInputAction: TextInputAction.go,
             ),
@@ -86,7 +87,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       persistentFooterButtons: [
         ElevatedButton(
           onPressed: _update,
-          child: const Text('Update'),
+          child: Text(lang.update),
         ),
       ],
     );

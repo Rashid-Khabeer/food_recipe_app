@@ -6,6 +6,7 @@ import 'package:food_recipie_app/src/base/sheets.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:reusables/reusables.dart';
 
@@ -54,16 +55,16 @@ class StepsFormWidget extends ControlledWidget<StepsController> {
 }
 
 class _StepsFormWidgetState extends State<StepsFormWidget>
-    with ControlledStateMixin {
+    with ControlledStateMixin, LocalizedStateMixin {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       ..._buildData(),
       GestureDetector(
         onTap: widget.controller._add,
-        child: Row(children: const [
-          Icon(Icons.add),
-          Text('Add another Step', style: kBoldW600f24Style),
+        child: Row(children: [
+          const Icon(Icons.add),
+          Text(lang.add_another_step, style: kBoldW600f24Style),
         ]),
       ),
     ]);
@@ -84,7 +85,7 @@ class _StepsFormWidgetState extends State<StepsFormWidget>
             Expanded(
               child: Column(children: [
                 AppTextField(
-                  hint: 'Step to follow',
+                  hint: lang.steps_to_follow,
                   validator: InputValidator.required(
                     message: 'Step is required',
                   ),
@@ -119,12 +120,12 @@ class _StepsFormWidgetState extends State<StepsFormWidget>
                           ),
                         )
                       else
-                        const Positioned(
+                        Positioned(
                           top: 10,
                           left: 16,
                           child: Text(
-                            'Upload photo (Optional)',
-                            style: TextStyle(
+                            lang.uploaded_photo + ' (Optional)',
+                            style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 16,
                               color: Colors.white,

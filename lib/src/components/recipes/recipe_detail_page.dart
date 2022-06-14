@@ -8,6 +8,7 @@ import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:food_recipie_app/src/widgets/network_image_widget.dart';
 import 'package:food_recipie_app/src/widgets/simple_stream_builder.dart';
@@ -24,7 +25,7 @@ class RecipeDetailPage extends StatefulWidget {
   _RecipeDetailPageState createState() => _RecipeDetailPageState();
 }
 
-class _RecipeDetailPageState extends State<RecipeDetailPage> {
+class _RecipeDetailPageState extends State<RecipeDetailPage> with LocalizedStateMixin {
   final _scrollController = ScrollController();
   var _rating = 5.0;
 
@@ -84,8 +85,8 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                             Navigator.of(context).pop();
                           },
                         ),
-                        const Text(
-                          "Rate it",
+                        Text(
+                          lang.rate_it,
                           style: kBoldW600f24Style,
                         ),
                       ],
@@ -121,7 +122,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                   ),
                 ),
                 Text(
-                  '(${recipe.ratings.length} Reviews)',
+                  '(${recipe.ratings.length} ${lang.reviews})',
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
@@ -176,7 +177,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                 ),
               ),
               const SizedBox(height: 15),
-              _buildTitle('Ingredients', '${recipe.ingredients.length} items'),
+              _buildTitle(lang.ingredients, '${recipe.ingredients.length} ${lang.items}'),
               const SizedBox(height: 16),
               for (var ing in recipe.ingredients)
                 Container(
@@ -199,7 +200,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                   ]),
                 ),
               const SizedBox(height: 12),
-              _buildTitle('Steps', '${recipe.steps.length} steps'),
+              _buildTitle(lang.steps, '${recipe.steps.length} ${lang.steps.toLowerCase()}'),
               const SizedBox(height: 16),
               ..._buildSteps(recipe),
             ], crossAxisAlignment: CrossAxisAlignment.start);

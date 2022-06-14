@@ -1,0 +1,126 @@
+{
+  "@@locale": "es",
+
+  "lets_cooking": "Vamos a cocinar",
+  "@lets_cooking": {},
+
+  "slogan": "Encuentra las mejores recetas de comida",
+  "@slogan": {},
+
+  "main_title": "Encuentra las mejores recetas para cocinar",
+  "@main_title": {},
+
+  "trending_now": "Siendo tendencia ahora",
+  "@trending_now": {},
+
+  "see_all": "Ver todo",
+  "@see_all": {},
+
+  "popular_categories": "Categoría popular",
+  "@popular_categories": {},
+
+  "no_results": "No hay resultados",
+  "@no_results": {},
+
+  "recent_recipes": "Recetas recientes",
+  "@recent_recipes": {},
+
+  "popular_creators": "Creadores populares",
+  "@popular_creators": {},
+
+  "saved_recipes": "Recetas guardadas",
+  "@saved_recipes": {},
+
+  "main_photo": "Foto principal",
+  "@main_photo": {},
+
+  "serves": "Servir",
+  "@serves": {},
+
+  "cooking_time": "Hora de cocinar",
+  "@cooking_time": {},
+
+  "category": "Categoría",
+  "@category": {},
+
+  "ingredients": "Ingredientes",
+  "@ingredients": {},
+
+  "item_name": "Nombre del árticulo",
+  "@item_name": {},
+
+  "add_new_ingredient": "Agregar nuevo ingrediente",
+  "@add_new_ingredient": {},
+
+  "steps": "Pasos",
+  "@steps": {},
+
+  "steps_to_follow": "Pasos a seguir",
+  "@steps_to_follow": {},
+
+  "uploaded_photo": "Foto cargada",
+  "@uploaded_photo": {},
+
+  "add_another_step": "Agregar otro paso",
+  "@add_another_step": {},
+
+  "save_recipe": "Guardar receta",
+  "@save_recipe": {},
+
+  "my_profile": "Mi perfil",
+  "@my_profile": {},
+
+  "recipe": "Receta",
+  "@recipe": {},
+
+  "edit_profile": "Editar perfil",
+  "@edit_profile": {},
+
+  "name": "Nombre",
+  "@name": {},
+
+  "bio": "Biografía",
+  "@bio": {},
+
+  "update": "Actualizar",
+  "@update": {},
+
+  "select_image_from": "Seleccione la imagen de",
+  "@select_image_from": {},
+
+  "camera": "Cámara",
+  "@camera": {},
+
+  "gallery": "Galería",
+  "@gallery": {},
+
+  "select_categories": "Seleccionar categorías",
+  "@select_categories": {},
+
+  "save": "Ahorrar",
+  "@save": {},
+
+  "order_by": "Ordenar",
+  "@order_by": {},
+
+  "search_recipe": "Recetas de búsqueda",
+  "@search_recipe": {},
+
+  "select_type": "Seleccione tipo",
+  "@select_type": {},
+
+  "recipes_by_creator": "Recetas del creador",
+  "@recipes_by_creator": {},
+
+  "rate_it": "Puntúalo",
+  "@rate_it": {},
+
+  "reviews": "Reseñas",
+  "@reviews": {},
+
+  "items": "Elementos",
+  "@items": {},
+
+  "trending_recipes": "Recetas de tendencias",
+  "@trending_recipes": {}
+}

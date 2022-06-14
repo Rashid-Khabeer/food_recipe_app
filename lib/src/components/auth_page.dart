@@ -9,6 +9,7 @@ import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:reusables/reusables.dart';
 
 class AuthPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class AuthPage extends StatefulWidget {
   _AuthPageState createState() => _AuthPageState();
 }
 
-class _AuthPageState extends State<AuthPage> {
+class _AuthPageState extends State<AuthPage> with LocalizedStateMixin {
   @override
   Widget build(BuildContext context) {
     final _padding = MediaQuery.of(context).padding;
@@ -65,8 +66,8 @@ class _AuthPageState extends State<AuthPage> {
             style: kBoldW600f16Style.copyWith(fontSize: 56),
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Find the best food recipes',
+          Text(
+            lang.slogan,
             style: kBoldW600f16Style,
           ),
           Padding(

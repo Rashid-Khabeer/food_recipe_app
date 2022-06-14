@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_recipie_app/src/base/data.dart';
 import 'package:food_recipie_app/src/base/nav.dart';
+import 'package:food_recipie_app/src/base/sheets.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/components/profile/edit_profile_page.dart';
 import 'package:food_recipie_app/src/components/profile/profile_recipe_widget.dart';
@@ -9,6 +11,7 @@ import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:food_recipie_app/src/widgets/network_image_widget.dart';
 import 'package:food_recipie_app/src/widgets/simple_stream_builder.dart';
@@ -20,7 +23,7 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage> with LocalizedStateMixin {
   final _scrollController = ScrollController();
   final _countController = RecipeCountController();
 
@@ -29,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: CustomAppBar(
         controller: _scrollController,
-        title: 'My Profile',
+        title: lang.my_profile,
         canPop: false,
         color: Colors.white,
       ),
@@ -50,7 +53,25 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
             child: Column(children: [
-              const Text('My Profile', style: kBoldW600f24Style),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(lang.my_profile, style: kBoldW600f24Style),
+                  GestureDetector(
+                    onTap: () => showDialog(
+                        context: context,
+                        builder: (context) => const DefaultLangDialog()),
+                    child: Wrap(
+                      children: [
+                        Text(AppData().getDefaultLang() == "en"
+                            ? "English"
+                            : "Spanish"),
+                        const Icon(Icons.keyboard_arrow_down),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               SimpleStreamBuilder<UserModel>.simpler(
                 stream: UserFirestoreService().fetchOneStreamFirestore(
                   FirebaseAuthService.userId,
@@ -89,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             );
                           },
                           child: Text(
-                            'Edit Profile',
+                            lang.edit_profile,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
@@ -119,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     Text(
-                      'Recipe',
+                      lang.recipe,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,

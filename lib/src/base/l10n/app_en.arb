@@ -1,0 +1,126 @@
+{
+  "@@locale": "en",
+
+  "lets_cooking": "Let's Cooking",
+  "@lets_cooking": {},
+
+  "slogan": "Find the best food recipes",
+  "@slogan": {},
+
+  "main_title": "Find best recipes for cooking",
+  "@main_title": {},
+
+  "trending_now": "Trending now",
+  "@trending_now": {},
+
+  "see_all": "See all",
+  "@see_all": {},
+
+  "popular_categories": "Popular category",
+  "@popular_categories": {},
+
+  "no_results": "No Results",
+  "@no_results": {},
+
+  "recent_recipes": "Recent recipes",
+  "@recent_recipes": {},
+
+  "popular_creators": "Popular creators",
+  "@popular_creators": {},
+
+  "saved_recipes": "Saved recipes",
+  "@saved_recipes": {},
+
+  "main_photo": "Main Photo",
+  "@main_photo": {},
+
+  "serves": "Serves",
+  "@serves": {},
+
+  "cooking_time": "Cooking time",
+  "@cooking_time": {},
+
+  "category": "Category",
+  "@category": {},
+
+  "ingredients": "Ingredients",
+  "@ingredients": {},
+
+  "item_name": "Item name",
+  "@item_name": {},
+
+  "add_new_ingredient": "Add new ingredient",
+  "@add_new_ingredient": {},
+
+  "steps": "Steps",
+  "@steps": {},
+
+  "steps_to_follow": "Steps to follow",
+  "@steps_to_follow": {},
+
+  "uploaded_photo": "Uploaded photo",
+  "@uploaded_photo": {},
+
+  "add_another_step": "Add another step",
+  "@add_another_step": {},
+
+  "save_recipe": "Save Recipe",
+  "@save_recipe": {},
+
+  "my_profile": "My Profile",
+  "@my_profile": {},
+
+  "recipe": "Recipe",
+  "@recipe": {},
+
+  "edit_profile": "Edit Profile",
+  "@edit_profile": {},
+
+  "name": "Name",
+  "@name": {},
+
+  "bio": "Bio",
+  "@bio": {},
+
+  "update": "Update",
+  "@update": {},
+
+  "select_image_from": "Select Image From",
+  "@select_image_from": {},
+
+  "camera": "Camera",
+  "@camera": {},
+
+  "gallery": "Gallery",
+  "@gallery": {},
+
+  "select_categories": "Select Categories",
+  "@select_categories": {},
+
+  "save": "Save",
+  "@save": {},
+
+  "order_by": "Order By",
+  "@order_by": {},
+
+  "search_recipe": "Search Recipes",
+  "@search_recipe": {},
+
+  "select_type": "Select Type",
+  "@select_type": {},
+
+  "recipes_by_creator": "Recipes By Creator",
+  "@recipes_by_creator": {},
+
+  "rate_it": "Rate it",
+  "@rate_it": {},
+
+  "reviews": "Reviews",
+  "@reviews": {},
+
+  "items": "Items",
+  "@items": {},
+
+  "trending_recipes": "Trending Recipes",
+  "@trending_recipes": {}
+}

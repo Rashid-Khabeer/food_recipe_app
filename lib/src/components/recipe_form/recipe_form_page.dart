@@ -13,6 +13,7 @@ import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 import 'package:food_recipie_app/src/services/firebase_storage_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:reusables/reusables.dart';
@@ -29,7 +30,7 @@ class RecipeFormPage extends StatefulWidget {
   _RecipeFormPageState createState() => _RecipeFormPageState();
 }
 
-class _RecipeFormPageState extends State<RecipeFormPage> {
+class _RecipeFormPageState extends State<RecipeFormPage> with LocalizedStateMixin {
   final _scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
   var _autoValidateMode = AutovalidateMode.disabled;
@@ -108,35 +109,35 @@ class _RecipeFormPageState extends State<RecipeFormPage> {
             const SizedBox(height: 16),
             _buildTile(
               icon: AppAssets.friends,
-              title: 'Serves',
+              title: lang.serves,
               text: _recipe.serves,
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 11, 0, 11),
               child: _buildTile(
                 icon: AppAssets.time,
-                title: 'Cooking time',
+                title: lang.cooking_time,
                 text: _recipe.cookingTime,
               ),
             ),
             _buildTile(
               icon: AppAssets.friends,
-              title: 'Category',
+              title: lang.category,
               text: _recipe.category.isNotEmpty ? _recipe.category.first : '',
             ),
             const SizedBox(height: 12),
-            const Text('Ingredients', style: kBoldW600f24Style),
+            Text(lang.ingredients, style: kBoldW600f24Style),
             const SizedBox(height: 16),
             IngredientsFormWidget(
               ingredientsController: _ingredientsController,
             ),
-            const Text('Steps', style: kBoldW600f24Style),
+            Text(lang.steps, style: kBoldW600f24Style),
             const SizedBox(height: 16),
             StepsFormWidget(stepsController: _stepsController),
             const SizedBox(height: 27),
             ElevatedButton(
               onPressed: _submit,
-              child: const Text('Save Recipe'),
+              child: Text(lang.save_recipe),
             ),
           ], crossAxisAlignment: CrossAxisAlignment.start),
         ),

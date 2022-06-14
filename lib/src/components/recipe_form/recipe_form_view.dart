@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 
@@ -20,7 +21,7 @@ class RecipeFormView extends StatefulWidget {
   _RecipeFormViewState createState() => _RecipeFormViewState();
 }
 
-class _RecipeFormViewState extends State<RecipeFormView> {
+class _RecipeFormViewState extends State<RecipeFormView> with LocalizedStateMixin {
   final _scrollController = ScrollController();
   var date = DateTime.utc(2022, 1, 1, 0, 0, 0, 0, 0);
 
@@ -48,8 +49,8 @@ class _RecipeFormViewState extends State<RecipeFormView> {
               padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
               sliver: SliverToBoxAdapter(
                 child: AppTextField(
-                  hint: 'Serves',
-                  label: 'Serves',
+                  hint: lang.serves,
+                  label: lang.serves,
                   textEditingController: TextEditingController(
                     text: widget.recipe.serves,
                   ),
@@ -64,8 +65,8 @@ class _RecipeFormViewState extends State<RecipeFormView> {
             ),
             SliverToBoxAdapter(
               child: AppTextField(
-                hint: 'Cooking time',
-                label: 'Cooking time',
+                hint: lang.cooking_time,
+                label: lang.cooking_time,
                 textEditingController: TextEditingController(
                   text: widget.recipe.cookingTime,
                 ),
@@ -94,7 +95,7 @@ class _RecipeFormViewState extends State<RecipeFormView> {
               padding: const EdgeInsets.only(top: 10.0),
               sliver: SliverToBoxAdapter(
                 child: Text(
-                  'Select Categories',
+                  lang.select_categories,
                   style: kBoldW600f16Style.copyWith(color: Colors.black),
                 ),
               ),

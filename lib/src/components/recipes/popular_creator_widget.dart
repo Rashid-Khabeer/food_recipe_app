@@ -5,6 +5,7 @@ import 'package:food_recipie_app/src/components/recipes/recipes_page.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/network_image_widget.dart';
 
 class PopularCreatorWidget extends StatefulWidget {
@@ -21,7 +22,7 @@ class PopularCreatorWidget extends StatefulWidget {
   State<PopularCreatorWidget> createState() => _PopularCreatorWidgetState();
 }
 
-class _PopularCreatorWidgetState extends State<PopularCreatorWidget> {
+class _PopularCreatorWidgetState extends State<PopularCreatorWidget> with LocalizedStateMixin {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -31,7 +32,7 @@ class _PopularCreatorWidgetState extends State<PopularCreatorWidget> {
           RecipesPage(
             dataFunction: () =>
                 RecipeFirestoreService().fetchByCreator(widget.user.id ?? ""),
-            title: "Recipes By Creator",
+            title: lang.recipes_by_creator,
             canPop: true,
           ),
         );
@@ -86,7 +87,7 @@ class PopularCreatorBoxWidget extends StatefulWidget {
       _PopularCreatorBoxWidgetState();
 }
 
-class _PopularCreatorBoxWidgetState extends State<PopularCreatorBoxWidget> {
+class _PopularCreatorBoxWidgetState extends State<PopularCreatorBoxWidget> with LocalizedStateMixin {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -96,7 +97,7 @@ class _PopularCreatorBoxWidgetState extends State<PopularCreatorBoxWidget> {
           RecipesPage(
             dataFunction: () =>
                 RecipeFirestoreService().fetchByCreator(widget.user.id ?? ""),
-            title: "Recipes By Creator",
+            title: lang.recipes_by_creator,
             canPop: true,
           ),
         );

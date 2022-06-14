@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/sheets.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reusables/reusables.dart';
 
@@ -41,7 +42,7 @@ class RecipeImagePicker extends ControlledWidget<RecipeImageController> {
 }
 
 class _RecipeImagePickerState extends State<RecipeImagePicker>
-    with ControlledStateMixin {
+    with ControlledStateMixin, LocalizedStateMixin {
   @override
   Widget build(BuildContext context) {
     var _isImageSelected = widget.controller._pickedFile != null;
@@ -71,12 +72,12 @@ class _RecipeImagePickerState extends State<RecipeImagePicker>
               ),
             )
           else
-            const Positioned(
+            Positioned(
               top: 10,
               left: 16,
               child: Text(
-                'Main Photo (required)',
-                style: TextStyle(
+                lang.main_photo + ' (required)',
+                style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 16,
                   color: Colors.white,

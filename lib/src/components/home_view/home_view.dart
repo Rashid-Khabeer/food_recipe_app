@@ -10,6 +10,7 @@ import 'package:food_recipie_app/src/components/recipes/recipes_page.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:food_recipie_app/src/widgets/simple_stream_builder.dart';
@@ -22,7 +23,7 @@ class HomeView extends StatefulWidget {
   _HomeViewState createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView> with LocalizedStateMixin {
   final _scrollController = ScrollController();
   final _service = RecipeFirestoreService();
 
@@ -32,17 +33,17 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: CustomAppBar(
         controller: _scrollController,
-        title: 'Find best recipes for cooking',
+        title: lang.main_title,
         canPop: false,
       ),
       body: CustomScrollView(slivers: [
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 28),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
               child: Text(
-                'Find best recipes for cooking',
+                lang.main_title,
                 style: kBoldW600f24Style,
               ),
             ),
@@ -62,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
                   color: AppTheme.neutralColor.shade200,
                 ),
               ),
-              hint: 'Search recipes',
+              hint: lang.search_recipe,
               onTap: () {
                 AppNavigation.to(context, const RecipeSearchPage());
               },
@@ -73,14 +74,14 @@ class _HomeViewState extends State<HomeView> {
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
           sliver: SliverToBoxAdapter(
             child: Row(children: [
-              Expanded(child: Text('Trending now 🔥', style: _style)),
+              Expanded(child: Text(lang.trending_now + ' 🔥', style: _style)),
               _seeAllButton(
                 () {
                   AppNavigation.to(
                     context,
                     RecipesPage(
                       dataFunction: _service.fetchTrending,
-                      title: 'Trending recipes',
+                      title: lang.trending_recipes,
                       canPop: true,
                     ),
                   );
@@ -117,7 +118,7 @@ class _HomeViewState extends State<HomeView> {
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(20, 24, 0, 16),
           sliver: SliverToBoxAdapter(
-            child: Text('Popular category', style: _style),
+            child: Text(lang.popular_categories, style: _style),
           ),
         ),
         const SliverPadding(
@@ -133,14 +134,14 @@ class _HomeViewState extends State<HomeView> {
           padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
           sliver: SliverToBoxAdapter(
             child: Row(children: [
-              Expanded(child: Text('Recent Recipe', style: _style)),
+              Expanded(child: Text(lang.recent_recipes, style: _style)),
               _seeAllButton(
                 () {
                   AppNavigation.to(
                     context,
                     RecipesPage(
                       dataFunction: _service.fetchAllSortedFirestore,
-                      title: 'Recent recipes',
+                      title: lang.recent_recipes,
                       canPop: true,
                     ),
                   );
@@ -178,14 +179,14 @@ class _HomeViewState extends State<HomeView> {
           padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
           sliver: SliverToBoxAdapter(
             child: Row(children: [
-              Expanded(child: Text('Popular Creators', style: _style)),
+              Expanded(child: Text(lang.popular_creators, style: _style)),
               _seeAllButton(
                     () {
                   AppNavigation.to(
                     context,
                     PopularCreatorsPage(
                       dataFunction: RecipeFirestoreService().popularCreators,
-                      title: 'Popular Creators',
+                      title: lang.popular_creators,
                       canPop: true,
                     ),
                   );
@@ -228,9 +229,9 @@ class _HomeViewState extends State<HomeView> {
     return TextButton(
       onPressed: onPressed,
       child: Row(children: [
-        const Text(
-          'See all',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+        Text(
+          lang.see_all,
+          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
         ),
         const SizedBox(width: 4),
         Image.asset(

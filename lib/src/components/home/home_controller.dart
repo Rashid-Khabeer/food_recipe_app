@@ -4,8 +4,9 @@ import 'package:food_recipie_app/src/components/profile/profile_page.dart';
 import 'package:food_recipie_app/src/components/recipe_form/recipe_form_page.dart';
 import 'package:food_recipie_app/src/components/recipes/recipes_page.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 
-class HomeController extends ChangeNotifier {
+class HomeController extends ChangeNotifier{
   HomeController() {
     _views = [
       const HomeView(),
