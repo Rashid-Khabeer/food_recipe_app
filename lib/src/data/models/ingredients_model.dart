@@ -9,7 +9,7 @@ class IngredientsModel extends Model {
   });
 
   String name;
-  String quantity;
+  String? quantity;
   String? unit;
 
   factory IngredientsModel.fromJson(Map<String, dynamic> json) =>
