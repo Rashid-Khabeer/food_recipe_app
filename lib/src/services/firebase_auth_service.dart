@@ -43,4 +43,8 @@ abstract class FirebaseAuthService {
       rethrow;
     }
   }
+
+  static Future<void> logout() async{
+    await _auth.signOut();
+  }
 }

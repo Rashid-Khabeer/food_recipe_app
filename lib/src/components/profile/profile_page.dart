@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/data.dart';
+import 'package:food_recipie_app/src/base/modals.dart';
 import 'package:food_recipie_app/src/base/nav.dart';
 import 'package:food_recipie_app/src/base/sheets.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
+import 'package:food_recipie_app/src/components/auth_page.dart';
 import 'package:food_recipie_app/src/components/profile/edit_profile_page.dart';
 import 'package:food_recipie_app/src/components/profile/profile_recipe_widget.dart';
 import 'package:food_recipie_app/src/components/profile/recipe_count_widget.dart';
@@ -102,25 +104,53 @@ class _ProfilePageState extends State<ProfilePage> with LocalizedStateMixin {
                           ),
                         ),
                         const Spacer(),
-                        OutlinedButton(
-                          onPressed: () {
-                            AppNavigation.to(
-                              context,
-                              EditProfilePage(user: user),
-                            );
-                          },
-                          child: Text(
-                            lang.edit_profile,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              color: AppTheme.primaryColor.shade500,
+                        Column(
+                          children: [
+                            OutlinedButton(
+                              onPressed: () {
+                                AppNavigation.to(
+                                  context,
+                                  EditProfilePage(user: user),
+                                );
+                              },
+                              child: Text(
+                                lang.edit_profile,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                  color: AppTheme.primaryColor.shade500,
+                                ),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                minimumSize: const Size(107, 36),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
                             ),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size(107, 36),
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
+                            const SizedBox(height: 10),
+                            OutlinedButton(
+                              onPressed: () async {
+                                $showLoadingDialog(context, "Logging out...");
+                                await FirebaseAuthService.logout();
+                                Navigator.of(context).pop();
+                                AppNavigation.to(
+                                  context,
+                                  const AuthPage(),
+                                );
+                              },
+                              child: Text(
+                                lang.logout,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                  color: AppTheme.primaryColor.shade500,
+                                ),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                minimumSize: const Size(107, 36),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                            ),
+                          ],
                         ),
                       ]),
                     ),

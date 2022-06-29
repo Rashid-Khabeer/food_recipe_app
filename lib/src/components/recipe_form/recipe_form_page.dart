@@ -4,6 +4,7 @@ import 'package:food_recipie_app/src/base/assets.dart';
 import 'package:food_recipie_app/src/base/modals.dart';
 import 'package:food_recipie_app/src/base/nav.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
+import 'package:food_recipie_app/src/components/home/home_page.dart';
 import 'package:food_recipie_app/src/components/recipe_form/ingredients_form.dart';
 import 'package:food_recipie_app/src/components/recipe_form/recipe_form_view.dart';
 import 'package:food_recipie_app/src/components/recipe_form/recipe_image_picker.dart';
@@ -260,6 +261,7 @@ class _RecipeFormPageState extends State<RecipeFormPage> with LocalizedStateMixi
         Navigator.of(context).pop();
       } else {
         $showSnackBar(context, 'Recipe Added!');
+        AppNavigation.to(context, HomePage());
       }
     } catch (e) {
       $showErrorDialog(context, e.toString());

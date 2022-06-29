@@ -16,7 +16,7 @@
   "see_all": "See all",
   "@see_all": {},
 
-  "popular_categories": "Popular category",
+  "popular_categories": "Popular by category",
   "@popular_categories": {},
 
   "no_results": "No Results",
@@ -75,6 +75,9 @@
 
   "edit_profile": "Edit Profile",
   "@edit_profile": {},
+
+  "logout": "Logout",
+  "@logout": {},
 
   "name": "Name",
   "@name": {},
