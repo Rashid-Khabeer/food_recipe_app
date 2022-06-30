@@ -156,7 +156,7 @@ class _HomeViewState extends State<HomeView> with LocalizedStateMixin {
             child: SizedBox(
               height: 260,
               child: SimpleStreamBuilder<List<RecipeModel>>.simpler(
-                stream: _service.fetchTrendingByLimit(),
+                stream: _service.fetchAllSortedFirestore(),
                 context: context,
                 builder: (data) {
                   return ListView.builder(

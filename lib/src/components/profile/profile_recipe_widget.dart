@@ -134,7 +134,7 @@ class _ProfileRecipeWidgetState extends State<ProfileRecipeWidget> {
     );
   }
 
-  void _deleteAction() async {
+  _deleteAction() async {
     if (!(await $showConfirmationDialog(
       context,
       'Are you sure you want to delete this recipe?',
@@ -142,12 +142,12 @@ class _ProfileRecipeWidgetState extends State<ProfileRecipeWidget> {
       return;
     }
     try {
-      $showLoadingDialog(context, 'Deleting...');
+      // $showLoadingDialog(context, 'Deleting...');
       await RecipeFirestoreService().deleteFirestore(widget.recipe.id ?? '');
-      Navigator.of(context).pop();
+      // Navigator.pop(context);
     } catch (_) {
       $showSnackBar(context, 'Delete failed!');
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
     }
   }
 }

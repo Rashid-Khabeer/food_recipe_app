@@ -7,7 +7,6 @@ import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 
 part 'firestore/recipe_firestore_service.dart';
-
 part 'firestore/user_firestore_service.dart';
 
 abstract class AppFirestoreService<T extends Model> {
@@ -52,6 +51,24 @@ abstract class AppFirestoreService<T extends Model> {
       .snapshots()
       .map((snapshot) =>
           snapshot.docs.map((document) => parseModel(document)).toList());
+
+  Stream<List<T>> fetchAllSortedWithLimitFirestore({int? limit}) {
+    if (limit != null) {
+      return FirebaseFirestore.instance
+          .collection(collectionName)
+          .orderBy('timestamp', descending: true)
+          .limit(limit)
+          .snapshots()
+          .map((snapshot) =>
+              snapshot.docs.map((document) => parseModel(document)).toList());
+    }
+    return FirebaseFirestore.instance
+        .collection(collectionName)
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map((snapshot) =>
+            snapshot.docs.map((document) => parseModel(document)).toList());
+  }
 
   Stream<T> fetchOneStreamFirestore(String id) {
     if (id.isEmpty) {
