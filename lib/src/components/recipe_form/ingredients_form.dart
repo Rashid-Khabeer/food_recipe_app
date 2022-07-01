@@ -119,13 +119,16 @@ class _IngredientsFormWidgetState extends State<IngredientsFormWidget>
                     },
                     items: const [
                       DropdownMenuItem(child: Text('kg'), value: 'kg'),
-                      DropdownMenuItem(child: Text('g'), value: 'g',),
+                      DropdownMenuItem(child: Text('g'), value: 'g'),
                       DropdownMenuItem(child: Text('L'), value: 'L'),
                       DropdownMenuItem(child: Text('ml'), value: 'ml'),
                       DropdownMenuItem(child: Text('u'), value: 'u'),
                     ],
                     label: '',
-                    height: 45,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 15,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24, width: 26),
