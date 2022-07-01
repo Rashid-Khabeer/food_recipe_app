@@ -7,6 +7,7 @@ import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 
 part 'firestore/recipe_firestore_service.dart';
+
 part 'firestore/user_firestore_service.dart';
 
 abstract class AppFirestoreService<T extends Model> {
@@ -133,7 +134,7 @@ abstract class AppFirestoreService<T extends Model> {
 
   Future deleteFirestore(String documentId) async {
     try {
-      await FirebaseFirestore.instance
+      FirebaseFirestore.instance
           .collection(collectionName)
           .doc(documentId)
           .delete();

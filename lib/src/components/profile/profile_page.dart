@@ -190,6 +190,7 @@ class _ProfilePageState extends State<ProfilePage> with LocalizedStateMixin {
             FirebaseAuthService.userId,
             'userId',
           ),
+          noData: () => _countController.change(0),
           context: context,
           builder: (data) {
             _countController.change(data.length);

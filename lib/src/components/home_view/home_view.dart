@@ -14,10 +14,14 @@ import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:food_recipie_app/src/widgets/simple_stream_builder.dart';
-import '../recipes/recipe_search_page.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({
+    Key? key,
+    required this.onSearch,
+  }) : super(key: key);
+
+  final VoidCallback onSearch;
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -64,9 +68,7 @@ class _HomeViewState extends State<HomeView> with LocalizedStateMixin {
                 ),
               ),
               hint: lang.search_recipe,
-              onTap: () {
-                AppNavigation.to(context, const RecipeSearchPage());
-              },
+              onTap: widget.onSearch,
             ),
           ),
         ),
@@ -181,7 +183,7 @@ class _HomeViewState extends State<HomeView> with LocalizedStateMixin {
             child: Row(children: [
               Expanded(child: Text(lang.popular_creators, style: _style)),
               _seeAllButton(
-                    () {
+                () {
                   AppNavigation.to(
                     context,
                     PopularCreatorsPage(
@@ -202,16 +204,18 @@ class _HomeViewState extends State<HomeView> with LocalizedStateMixin {
               height: 130,
               child: FutureBuilder(
                 builder: (context, AsyncSnapshot<List<UserModel>> snapshot) {
-                  return snapshot.hasData ? ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (ctx, i) {
-                      return PopularCreatorWidget(
+                  return snapshot.hasData
+                      ? ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (ctx, i) {
+                            return PopularCreatorWidget(
                               user: snapshot.data![i],
                               width: 100,
                             );
-                    },
-                    itemCount: snapshot.data?.length ?? 0,
-                  ) : const SizedBox();
+                          },
+                          itemCount: snapshot.data?.length ?? 0,
+                        )
+                      : const SizedBox();
                 },
                 future: RecipeFirestoreService().popularCreators(5),
               ),

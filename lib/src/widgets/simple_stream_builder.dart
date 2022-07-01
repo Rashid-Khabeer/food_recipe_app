@@ -15,6 +15,7 @@ class SimpleStreamBuilder<T> extends StreamBuilder<T> {
     String? noDataMessage,
     required Function(String) errorBuilder,
     required Function(T) builder,
+    required VoidCallback noData,
   }) : super(
           key: key,
           stream: stream,
@@ -31,6 +32,7 @@ class SimpleStreamBuilder<T> extends StreamBuilder<T> {
                   if (snapshot.hasData) {
                     if (snapshot.data is List) {
                       if ((snapshot.data as List).isEmpty) {
+                        noData();
                         return noDataChild ??
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -58,6 +60,7 @@ class SimpleStreamBuilder<T> extends StreamBuilder<T> {
                     }
                     return builder(snapshot.data!);
                   } else {
+                    noData();
                     return noDataChild ??
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -95,9 +98,11 @@ class SimpleStreamBuilder<T> extends StreamBuilder<T> {
     required Stream<T> stream,
     required BuildContext context,
     required Function(T) builder,
+    VoidCallback? noData,
   }) : this(
           key: key,
           context: context,
+          noData: noData ?? () {},
           stream: stream,
           noneChild: const Text('No Connection was found'),
           noDataChild: Column(
@@ -140,10 +145,12 @@ class SimpleStreamBuilder<T> extends StreamBuilder<T> {
     required Stream<T> stream,
     required BuildContext context,
     required Function(T) builder,
+    VoidCallback? noData,
   }) : this(
           key: key,
           context: context,
           stream: stream,
+          noData: noData ?? () {},
           noneChild: const SliverToBoxAdapter(
             child: Center(child: Text('No Connection was found')),
           ),
