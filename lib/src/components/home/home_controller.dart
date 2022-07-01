@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:food_recipie_app/src/components/home_view/home_view.dart';
 import 'package:food_recipie_app/src/components/profile/profile_page.dart';
 import 'package:food_recipie_app/src/components/recipe_form/recipe_form_page.dart';
+import 'package:food_recipie_app/src/components/recipes/recipe_search_page.dart';
 import 'package:food_recipie_app/src/components/recipes/recipes_page.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
-import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 
-class HomeController extends ChangeNotifier{
+class HomeController extends ChangeNotifier {
   HomeController() {
     _views = [
-      const HomeView(),
+      HomeView(onSearch: changeSearchView),
       RecipesPage(
         dataFunction: RecipeFirestoreService().fetchSaved,
         title: 'Saved recipes',
@@ -18,6 +18,14 @@ class HomeController extends ChangeNotifier{
       const RecipeFormPage(),
       const ProfilePage(),
     ];
+  }
+
+  var _isSearchView = false;
+
+  void changeSearchView() {
+    _isSearchView = true;
+    _views[0] = const RecipeSearchPage();
+    notifyListeners();
   }
 
   final _scrollController = ScrollController();
@@ -42,6 +50,12 @@ class HomeController extends ChangeNotifier{
   Future<bool> onWillPop() async {
     if (_currentIndex != 0) {
       _currentIndex = 0;
+      notifyListeners();
+      return false;
+    }
+    if (_isSearchView) {
+      _views[0] = HomeView(onSearch: changeSearchView);
+      _isSearchView = false;
       notifyListeners();
       return false;
     }
