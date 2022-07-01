@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
 
 class AppDropDownWidget<T> extends StatefulWidget {
-  const AppDropDownWidget({
+  AppDropDownWidget({
     Key? key,
     required this.hint,
     required this.label,
@@ -11,6 +11,7 @@ class AppDropDownWidget<T> extends StatefulWidget {
     this.value,
     required this.onChanged,
     this.validator,
+    this.height,
   }) : super(key: key);
 
   final String hint;
@@ -20,6 +21,7 @@ class AppDropDownWidget<T> extends StatefulWidget {
   final ValueChanged<T?> onChanged;
   final List<DropdownMenuItem<T>> items;
   final FormFieldValidator<T>? validator;
+  final double? height;
 
   @override
   _AppDropDownWidgetState<T> createState() => _AppDropDownWidgetState<T>();
@@ -45,40 +47,43 @@ class _AppDropDownWidgetState<T> extends State<AppDropDownWidget<T>> {
         ),
         child: Text(widget.label),
       ),
-      DropdownButtonFormField<T>(
-        items: widget.items,
-        isExpanded: true,
-        value: _value,
-        onSaved: widget.onSaved,
-        validator: widget.validator,
-        style: const TextStyle(fontSize: 14, color: Colors.black),
-        decoration: InputDecoration(
-          fillColor: AppTheme.neutralColor.shade100,
-          filled: true,
-          isDense: true,
-          hintText: widget.hint,
-          hintStyle: const TextStyle(fontSize: 12),
-          labelStyle: const TextStyle(fontSize: 12),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppTheme.neutralColor.shade200,
-              width: 1,
+      SizedBox(
+        height: widget.height,
+        child: DropdownButtonFormField<T>(
+          items: widget.items,
+          isExpanded: true,
+          value: _value,
+          onSaved: widget.onSaved,
+          validator: widget.validator,
+          style: const TextStyle(fontSize: 14, color: Colors.black),
+          decoration: InputDecoration(
+            fillColor: AppTheme.neutralColor.shade100,
+            filled: true,
+            isDense: true,
+            hintText: widget.hint,
+            hintStyle: const TextStyle(fontSize: 12),
+            labelStyle: const TextStyle(fontSize: 12),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppTheme.neutralColor.shade200,
+                width: 1,
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppTheme.primaryColor.shade500,
-              width: 1,
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppTheme.primaryColor.shade500,
+                width: 1,
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
+          onChanged: (value) {
+            _value = value;
+            setState(() {});
+            widget.onChanged(_value);
+          },
         ),
-        onChanged: (value) {
-          _value = value;
-          setState(() {});
-          widget.onChanged(_value);
-        },
       ),
     ], crossAxisAlignment: CrossAxisAlignment.start);
   }

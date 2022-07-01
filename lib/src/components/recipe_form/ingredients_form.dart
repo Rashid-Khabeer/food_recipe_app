@@ -63,65 +63,76 @@ class _IngredientsFormWidgetState extends State<IngredientsFormWidget>
     for (var i = 0; i < widget.controller.ingredients.length; i++) {
       _list.add(Padding(
         padding: const EdgeInsets.only(bottom: 16),
-        child: Row(children: [
-          Expanded(
-            flex: 3,
-            child: AppTextField(
-              hint: lang.item_name,
-              validator: InputValidator.required(
-                message: 'Name is required',
+        child: Column(
+          children: [
+            Row(children: [
+              Expanded(
+                child: AppTextField(
+                  hint: lang.item_name,
+                  validator: InputValidator.required(
+                    message: 'Name is required',
+                  ),
+                  value: widget.controller.ingredients[i].name,
+                  onChanged: (value) {
+                    widget.controller.ingredients[i].name = value ?? '';
+                    widget.controller.onChanged(widget.controller.ingredients);
+                  },
+                ),
               ),
-              value: widget.controller.ingredients[i].name,
-              onChanged: (value) {
-                widget.controller.ingredients[i].name = value ?? '';
-                widget.controller.onChanged(widget.controller.ingredients);
-              },
-            ),
-          ),
-          const SizedBox(width: 5),
-          Expanded(
-            child: AppTextField(
-              hint: 'Qty',
-              value: widget.controller.ingredients[i].quantity,
-              onChanged: (value) {
-                widget.controller.ingredients[i].quantity = value ?? '';
-                widget.controller.onChanged(widget.controller.ingredients);
-              },
-            ),
-          ),
-          const SizedBox(width: 5),
-          Expanded(
-            child: AppDropDownWidget(
-              hint: "U",
-              value: widget.controller.ingredients[i].unit,
-              onChanged: (String? v) {
-                widget.controller.ingredients[i].unit = v ?? '';
-                widget.controller.onChanged(widget.controller.ingredients);
-              },
-              items: const [
-                DropdownMenuItem(child: Text('kg'), value: 'kg'),
-                DropdownMenuItem(child: Text('g'), value: 'g'),
-                DropdownMenuItem(child: Text('L'), value: 'L'),
-                DropdownMenuItem(child: Text('ml'), value: 'ml'),
-                DropdownMenuItem(child: Text('u'), value: 'u'),
+              const SizedBox(width: 5),
+              GestureDetector(
+                onTap: () => widget.controller._remove(i),
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: const Icon(Icons.remove, size: 15),
+                ),
+              ),
+            ]),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Expanded(
+                  child: AppTextField(
+                    hint: 'Qty',
+                    value: widget.controller.ingredients[i].quantity,
+                    onChanged: (value) {
+                      widget.controller.ingredients[i].quantity = value ?? '';
+                      widget.controller
+                          .onChanged(widget.controller.ingredients);
+                    },
+                  ),
+                ),
+                const SizedBox(width: 5),
+                Expanded(
+                  child: AppDropDownWidget(
+                    hint: "Unit",
+                    value: widget.controller.ingredients[i].unit,
+                    onChanged: (String? v) {
+                      widget.controller.ingredients[i].unit = v ?? '';
+                      widget.controller
+                          .onChanged(widget.controller.ingredients);
+                    },
+                    items: const [
+                      DropdownMenuItem(child: Text('kg'), value: 'kg'),
+                      DropdownMenuItem(child: Text('g'), value: 'g',),
+                      DropdownMenuItem(child: Text('L'), value: 'L'),
+                      DropdownMenuItem(child: Text('ml'), value: 'ml'),
+                      DropdownMenuItem(child: Text('u'), value: 'u'),
+                    ],
+                    label: '',
+                    height: 45,
+                  ),
+                ),
+                const SizedBox(height: 24, width: 26),
               ],
-              label: '',
             ),
-          ),
-          const SizedBox(width: 5),
-          GestureDetector(
-            onTap: () => widget.controller._remove(i),
-            child: Container(
-              height: 24,
-              width: 24,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.black),
-              ),
-              child: const Icon(Icons.remove, size: 15),
-            ),
-          ),
-        ]),
+          ],
+        ),
       ));
     }
     return _list;

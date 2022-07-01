@@ -29,6 +29,8 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> with LocalizedState
   final _scrollController = ScrollController();
   var _rating = 5.0;
 
+  final _userId = FirebaseAuthService.userId;
+
   @override
   void initState() {
     var index = widget.recipe.ratings.indexWhere(
@@ -130,6 +132,38 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> with LocalizedState
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
                     color: AppTheme.neutralColor.shade400,
+                  ),
+                ),
+                const Spacer(),
+                TextButton(
+                  onPressed: () => _bookMarkAction(),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        AppAssets.saved,
+                        color: widget.recipe.savedUsersIds
+                                .contains(_userId)
+                            ? AppTheme.primaryColor.shade500
+                            : const Color(0xff130F26),
+                        height: 14.61,
+                        width: 18.22,
+                      ),
+                      const SizedBox(width: 7),
+                      Text(
+                        widget.recipe.savedUsersIds
+                                .contains(_userId)
+                            ? "Unsave"
+                            : "Save",
+                      ),
+                    ],
+                  ),
+                  style: TextButton.styleFrom(
+                    minimumSize: const Size(32, 32),
+                    primary: AppTheme.primaryColor.shade500,
+                    backgroundColor: Colors.white,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    elevation: 5,
+                    // shape: const CircleBorder(),
                   ),
                 ),
               ]),
@@ -269,5 +303,16 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> with LocalizedState
       ));
     }
     return _list;
+  }
+
+  void _bookMarkAction() async {
+    try {
+      if (widget.recipe.savedUsersIds.contains(_userId)) {
+        widget.recipe.savedUsersIds.remove(_userId);
+      } else {
+        widget.recipe.savedUsersIds.add(_userId);
+      }
+      await RecipeFirestoreService().updateFirestore(widget.recipe);
+    } catch (_) {}
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/base/assets.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
@@ -8,7 +7,6 @@ import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
-
 import '../../widgets/app_dropdown_widget.dart';
 
 class RecipeSearchPage extends StatefulWidget {
@@ -215,7 +213,7 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> with LocalizedState
               onChange: (List<String> categories) {
                 _selectedCategories = categories;
               },
-              onOrderByChange: (OrderBy value) {
+              onOrderByChange: (OrderBy? value) {
                 _orderBy = value;
               },
               selectedOrderBy: _orderBy,
@@ -223,8 +221,10 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> with LocalizedState
             );
           },
         );
-        filteredRecipes = filter();
-        setState(() {});
+        if (_selectedCategories.isNotEmpty || _orderBy != null) {
+          filteredRecipes = filter();
+          setState(() {});
+        }
       },
       child: Container(
         padding: const EdgeInsets.fromLTRB(16, 12, 20, 12),
@@ -292,7 +292,7 @@ class SortingDialog extends StatefulWidget {
   final List<String> selected;
   final OrderBy? selectedOrderBy;
   final Function(List<String>) onChange;
-  final Function(OrderBy) onOrderByChange;
+  final Function(OrderBy?) onOrderByChange;
 
   @override
   _SortingDialogState createState() => _SortingDialogState();
@@ -301,6 +301,8 @@ class SortingDialog extends StatefulWidget {
 class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin {
   final Map<String, bool> _checkedCategories = {};
   OrderBy? _selectedOrderBy;
+
+  late GlobalKey<FormFieldState> _key;
 
   buildSelectedCategoryMap() {
     for (var cat in kRecipeCategories) {
@@ -317,8 +319,9 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
 
   @override
   initState() {
-    buildSelectedCategoryMap();
     super.initState();
+    buildSelectedCategoryMap();
+    _key = GlobalKey();
   }
 
   @override
@@ -330,24 +333,42 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
         child: Container(
           height: 600,
           width: 500,
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: Colors.white,
           ),
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: InkWell(
-                    child: Icon(
-                      CupertinoIcons.clear_thick_circled,
-                      color: AppTheme.primaryColor,
+              Row(
+                children: [
+                  const Spacer(),
+                  TextButton(
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.filter_alt_off,
+                          size: 20,
+                          color: Colors.black,
+                        ),
+                        SizedBox(width: 7),
+                        Text(
+                          "Clear Filter",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    }),
+                    onPressed: () => _clearFilter(),
+                    style: TextButton.styleFrom(
+                      visualDensity: VisualDensity.compact,
+                    ),
+                  ),
+                ],
               ),
+              const SizedBox(height: 5),
               Text(
                 lang.order_by + ':',
                 style: kBoldW600f16Style.copyWith(color: AppTheme.primaryColor),
@@ -355,6 +376,7 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: AppDropDownWidget<OrderBy>(
+                  key: _key,
                   items: const [
                     DropdownMenuItem(
                       child: Text("Rating"),
@@ -376,6 +398,7 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
                   label: '',
                 ),
               ),
+              const SizedBox(height: 5),
               Text(
                 lang.select_categories + ':',
                 style: kBoldW600f16Style.copyWith(color: AppTheme.primaryColor),
@@ -391,14 +414,13 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
                           title: Text(kRecipeCategories[index]),
                           value: _checkedCategories[kRecipeCategories[index]],
                           onChanged: (bool? value) {
-                            setState(() {
-                              _checkedCategories[kRecipeCategories[index]] =
-                                  value ?? false;
-                            });
+                            _checkedCategories[kRecipeCategories[index]] =
+                                value ?? false;
                             widget.onChange(_checkedCategories.keys
                                 .where((element) =>
                                     _checkedCategories[element] == true)
                                 .toList());
+                            setState(() {});
                             // onCheck(kRecipeCategories[index]);
                           },
                         );
@@ -412,10 +434,28 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
                   ),
                 ),
               ),
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text("Apply Filter"),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  _clearFilter() {
+    _key.currentState?.reset();
+    _selectedOrderBy = null;
+    if (widget.selected.isNotEmpty) {
+      for (var cat in widget.selected) {
+        _checkedCategories[cat] = false;
+      }
+    }
+    setState(() {});
+
+    widget.onChange([]);
+    widget.onOrderByChange(null);
   }
 }
