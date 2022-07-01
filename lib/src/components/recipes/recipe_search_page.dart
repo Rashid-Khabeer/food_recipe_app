@@ -28,7 +28,7 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> with LocalizedState
   OrderBy? _orderBy;
   final TextEditingController _searchController = TextEditingController();
 
-  fetchData() async {
+  Future<void> fetchData() async {
     recipes = await RecipeFirestoreService().fetchAllFirestoreFuture();
     filteredRecipes = recipes;
     setState(() {});
@@ -221,10 +221,12 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> with LocalizedState
             );
           },
         );
-        if (_selectedCategories.isNotEmpty || _orderBy != null) {
+        if (_selectedCategories.isEmpty && _orderBy == null) {
+          await fetchData();
+        } else if (_selectedCategories.isNotEmpty || _orderBy != null) {
           filteredRecipes = filter();
-          setState(() {});
         }
+        setState(() {});
       },
       child: Container(
         padding: const EdgeInsets.fromLTRB(16, 12, 20, 12),
@@ -421,7 +423,6 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
                                     _checkedCategories[element] == true)
                                 .toList());
                             setState(() {});
-                            // onCheck(kRecipeCategories[index]);
                           },
                         );
                       },
@@ -449,7 +450,7 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
     _key.currentState?.reset();
     _selectedOrderBy = null;
     if (widget.selected.isNotEmpty) {
-      for (var cat in widget.selected) {
+      for (var cat in _checkedCategories.keys) {
         _checkedCategories[cat] = false;
       }
     }
@@ -457,5 +458,6 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
 
     widget.onChange([]);
     widget.onOrderByChange(null);
+    Navigator.of(context).pop();
   }
 }
