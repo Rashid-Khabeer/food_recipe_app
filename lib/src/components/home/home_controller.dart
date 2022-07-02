@@ -40,9 +40,12 @@ class HomeController extends ChangeNotifier {
   ScrollController get scrollController => _scrollController;
 
   void onTap(int value) {
-    // if (value == 2) {
-    //   return;
-    // }
+    if (value == 0) {
+      if (_isSearchView) {
+        _views[0] = HomeView(onSearch: changeSearchView);
+        _isSearchView = false;
+      }
+    }
     _currentIndex = value;
     notifyListeners();
   }
