@@ -7,6 +7,7 @@ import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
+
 import '../../widgets/app_dropdown_widget.dart';
 
 class RecipeSearchPage extends StatefulWidget {
@@ -41,7 +42,9 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> with LocalizedState
     // Filtering by text
     if (_searchController.text.isNotEmpty) {
       for (var recipe in filteredRecipes) {
-        if (recipe.name.contains(_searchController.text)) {
+        if (recipe.name
+            .toLowerCase()
+            .contains(_searchController.text.toLowerCase())) {
           filtered.add(recipe);
         }
       }
@@ -157,9 +160,13 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> with LocalizedState
               ),
               hint: lang.search_recipe,
                onChanged: (value) {
-                filteredRecipes = filter();
+                if (_searchController.text.isNotEmpty) {
+                  filteredRecipes = filter();
+                } else {
+                  filteredRecipes = recipes;
+                }
                 setState(() {});
-               },
+              },
             ),
             const SizedBox(height: 17),
             _buildTile(

@@ -65,35 +65,38 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> with LocalizedState
                   Expanded(
                     child: Column(
                       children: [
-                        RatingBar.builder(
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          itemSize: MediaQuery.of(context).size.width / 15,
-                          allowHalfRating: false,
-                          itemCount: 5,
-                          glow: false,
-                          initialRating: _rating,
-                          itemPadding: const EdgeInsets.only(right: 4.0),
-                          itemBuilder: (context, _) => const Icon(
-                            Icons.star,
-                            color: Colors.amber,
+                        if (widget.recipe.userId !=
+                            FirebaseAuthService.userId) ...[
+                          RatingBar.builder(
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            itemSize: MediaQuery.of(context).size.width / 15,
+                            allowHalfRating: false,
+                            itemCount: 5,
+                            glow: false,
+                            initialRating: _rating,
+                            itemPadding: const EdgeInsets.only(right: 4.0),
+                            itemBuilder: (context, _) => const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            updateOnDrag: true,
+                            onRatingUpdate: (double rating) async {
+                              _rating = rating;
+                              $showLoadingDialog(context, 'updating...');
+                              await RecipeFirestoreService().updateRating(
+                                _rating,
+                                FirebaseAuthService.userId,
+                                recipe.id ?? '',
+                              );
+                              Navigator.of(context).pop();
+                            },
                           ),
-                          updateOnDrag: true,
-                          onRatingUpdate: (double rating) async {
-                            _rating = rating;
-                            $showLoadingDialog(context, 'updating...');
-                            await RecipeFirestoreService().updateRating(
-                              _rating,
-                              FirebaseAuthService.userId,
-                              recipe.id ?? '',
-                            );
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        Text(
-                          lang.rate_it,
-                          style: kBoldW600f24Style,
-                        ),
+                          Text(
+                            lang.rate_it,
+                            style: kBoldW600f24Style,
+                          ),
+                        ],
                       ],
                     ),
                   ),
@@ -266,6 +269,11 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> with LocalizedState
     ]);
   }
 
+  String getDeviceType() {
+    final data = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+    return data.size.shortestSide < 600 ? 'phone' : 'tablet';
+  }
+
   List<Widget> _buildSteps(RecipeModel recipe) {
     var _list = <Widget>[];
     for (var i = 0; i < recipe.steps.length; i++) {
@@ -293,7 +301,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> with LocalizedState
           if (_hasImage)
             SizedBox(
               width: double.infinity,
-              height: 217,
+              height: getDeviceType() == "phone" ? 217 : 317,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: NetworkImageWidget(url: _step.image),

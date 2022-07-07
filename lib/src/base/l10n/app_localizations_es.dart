@@ -80,6 +80,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get recipe => 'Receta';
 
   @override
+  String get average_rating => 'Puntuación media';
+
+  @override
   String get edit_profile => 'Editar perfil';
 
   @override

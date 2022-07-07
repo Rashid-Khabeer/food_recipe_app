@@ -45,6 +45,7 @@ abstract class FirebaseAuthService {
   }
 
   static Future<void> logout() async{
+    await _googleSignIn.signOut();
     await _auth.signOut();
   }
 }

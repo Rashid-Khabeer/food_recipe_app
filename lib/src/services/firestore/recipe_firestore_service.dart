@@ -19,23 +19,38 @@ class RecipeFirestoreService extends AppFirestoreService<RecipeModel> {
             snapshot.docs.map((document) => parseModel(document)).toList());
   }
 
-  Stream<List<RecipeModel>> fetchTrending() {
+  Stream<List<RecipeModel>> fetchTrending({int? limit}) {
+    var lastDate = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    ).subtract(
+      const Duration(days: 30),
+    );
+    if (limit != null) {
+      return FirebaseFirestore.instance
+          .collection(collectionName)
+          .where(
+            "timestamp",
+            isGreaterThan: lastDate,
+          )
+          .limit(3)
+          .snapshots()
+          .map((snapshot) =>
+              snapshot.docs.map((document) => parseModel(document)).toList()
+                ..sort((a, b) => b.rating.compareTo(a.rating)));
+    }
     return FirebaseFirestore.instance
         .collection(collectionName)
-        .orderBy('rating', descending: true)
-        .snapshots()
-        .map((snapshot) =>
-            snapshot.docs.map((document) => parseModel(document)).toList());
-  }
-
-  Stream<List<RecipeModel>> fetchTrendingByLimit() {
-    return FirebaseFirestore.instance
-        .collection(collectionName)
-        .orderBy('rating', descending: true)
+        .where(
+          "timestamp",
+          isGreaterThan: lastDate,
+        )
         .limit(3)
         .snapshots()
         .map((snapshot) =>
-            snapshot.docs.map((document) => parseModel(document)).toList());
+            snapshot.docs.map((document) => parseModel(document)).toList()
+              ..sort((a, b) => b.rating.compareTo(a.rating)));
   }
 
   Stream<List<RecipeModel>> fetchRecentByLimit() {
@@ -91,9 +106,35 @@ class RecipeFirestoreService extends AppFirestoreService<RecipeModel> {
           model.ratings.add(RatingModel(personId: userId, rate: rating));
         }
         await updateFirestore(model);
+        await updateCreatorAverage(userId: userId);
       }
     } catch (e) {
       rethrow;
+    }
+  }
+
+  Future<void> updateCreatorAverage({required String userId}) async {
+    // Updating average creator rating
+    var userRecipes = await FirebaseFirestore.instance
+        .collection(collectionName)
+        .where('userId', isEqualTo: userId)
+        .get()
+        .then((snap) => snap.docs.map((ds) => parseModel(ds)).toList());
+    var rating = 0.0;
+    var count = 0;
+    if (userRecipes.isNotEmpty) {
+      for (var recipe in userRecipes) {
+        if (recipe.rating != 0.0 && recipe.rating != 0) {
+          rating += recipe.rating;
+          count++;
+        }
+      }
+
+      var user = await UserFirestoreService().fetchOneFirestore(userId);
+      if (user != null) {
+        user.creatorAverage = rating / count;
+        await UserFirestoreService().updateFirestore(user);
+      }
     }
   }
 

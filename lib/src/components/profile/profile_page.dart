@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_recipie_app/src/base/assets.dart';
 import 'package:food_recipie_app/src/base/data.dart';
 import 'package:food_recipie_app/src/base/modals.dart';
 import 'package:food_recipie_app/src/base/nav.dart';
@@ -169,15 +170,51 @@ class _ProfilePageState extends State<ProfilePage> with LocalizedStateMixin {
                         ),
                       ),
                     ),
-                    Text(
-                      lang.recipe,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppTheme.neutralColor.shade600,
-                      ),
+                    Row(
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              lang.recipe,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppTheme.neutralColor.shade600,
+                              ),
+                            ),
+                            RecipeCountWidget(
+                                countController: _countController),
+                          ],
+                        ),
+                        ///TODO Test creator average
+                        const SizedBox(width: 15),
+                        Column(
+                          children: [
+                            Text(
+                              lang.average_rating,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppTheme.neutralColor.shade600,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Image.asset(AppAssets.star, color: Colors.yellow, height: 21,),
+                                const SizedBox(width: 5),
+                                Text(
+                                  user.creatorAverage.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    RecipeCountWidget(countController: _countController),
                   ], crossAxisAlignment: CrossAxisAlignment.start);
                 },
               ),

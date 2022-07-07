@@ -144,6 +144,7 @@ class _ProfileRecipeWidgetState extends State<ProfileRecipeWidget> {
     try {
       // $showLoadingDialog(context, 'Deleting...');
       await RecipeFirestoreService().deleteFirestore(widget.recipe.id ?? '');
+      await RecipeFirestoreService().updateCreatorAverage(userId: widget.recipe.userId);
       // Navigator.pop(context);
     } catch (_) {
       $showSnackBar(context, 'Delete failed!');

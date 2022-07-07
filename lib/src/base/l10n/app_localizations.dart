@@ -238,6 +238,12 @@ abstract class AppLocalizations {
   /// **'Recipe'**
   String get recipe;
 
+  /// No description provided for @average_rating.
+  ///
+  /// In en, this message translates to:
+  /// **'Average Rating'**
+  String get average_rating;
+
   /// No description provided for @edit_profile.
   ///
   /// In en, this message translates to:

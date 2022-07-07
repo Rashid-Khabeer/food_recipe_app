@@ -93,19 +93,28 @@ class _AuthPageState extends State<AuthPage> with LocalizedStateMixin {
       if (_type == null) {
         return;
       }
-      await Awaiter.process(
+      var user = await Awaiter.process(
         future: _signIn(_type!),
         context: context,
         arguments: 'Signing in...',
       );
       Navigator.of(context).pop();
-      AppNavigation.to(context, HomePage());
+      if (user?.isBlocked ?? false) {
+        await FirebaseAuthService.logout();
+        $showSnackBar(context, "You're blocked by the Admin for unusual activity");
+        AppNavigation.to(
+          context,
+          const AuthPage(),
+        );
+      } else {
+        AppNavigation.to(context, HomePage());
+      }
     } catch (e) {
       $showErrorDialog(context, e.toString());
     }
   }
 
-  Future<void> _signIn(loginType type) async {
+  Future<UserModel?> _signIn(loginType type) async {
     try {
       late UserCredential _authUser;
       switch (type) {
@@ -128,6 +137,7 @@ class _AuthPageState extends State<AuthPage> with LocalizedStateMixin {
           profilePicture: _authUser.user?.photoURL,
         )..id = _authUser.user?.uid);
       }
+      return _user;
     } catch (_) {
       rethrow;
     }

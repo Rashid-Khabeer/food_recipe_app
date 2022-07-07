@@ -7,12 +7,16 @@ class UserModel extends Model {
     this.name,
     this.bio,
     this.profilePicture,
+    this.isBlocked = false,
+    this.creatorAverage = 0.0,
   });
 
   String? name;
   String email;
   String? bio;
   String? profilePicture;
+  bool isBlocked;
+  double creatorAverage;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);

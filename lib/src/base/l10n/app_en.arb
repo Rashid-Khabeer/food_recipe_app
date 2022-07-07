@@ -73,6 +73,9 @@
   "recipe": "Recipe",
   "@recipe": {},
 
+  "average_rating": "Average Rating",
+  "@average_rating": {},
+
   "edit_profile": "Edit Profile",
   "@edit_profile": {},
 
