@@ -7,6 +7,7 @@ import 'package:food_recipie_app/src/base/data.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:translator/translator.dart';
 
 part 'firestore/recipe_firestore_service.dart';
 

@@ -18,6 +18,7 @@ import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/app_text_field.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:reusables/reusables.dart';
+import 'package:translator/translator.dart';
 
 class RecipeFormPage extends StatefulWidget {
   const RecipeFormPage({
@@ -43,6 +44,79 @@ class _RecipeFormPageState extends State<RecipeFormPage> with LocalizedStateMixi
   late IngredientsController _ingredientsController;
   late StepsController _stepsController;
 
+  final translator = GoogleTranslator();
+
+  Future<String> translateText({
+    required String input,
+    required String lang,
+  }) async {
+    String text = '';
+    await translator
+        .translate(input, to: lang)
+        .then((value) => text = value.text);
+    return text;
+  }
+
+  String capitalize({required String text}) {
+    return text[0].toUpperCase() + text.substring(1).toLowerCase();
+  }
+
+  Future<RecipeModel> translateRecipe({required RecipeModel recipe}) async {
+    recipe.name = capitalize(text: recipe.name);
+    recipe.spanishName = await translateText(
+      input: recipe.name,
+      lang: 'es',
+    );
+    recipe.englishName = await translateText(
+      input: recipe.name,
+      lang: 'en',
+    );
+
+    recipe.englishIngredients = recipe.ingredients;
+    recipe.spanishIngredients = recipe.ingredients;
+    recipe.englishSteps = recipe.steps;
+    recipe.spanishSteps = recipe.steps;
+
+    for (var i = 0; i < recipe.ingredients.length; i++) {
+      recipe.ingredients[i].name =
+          capitalize(text: recipe.ingredients[i].name);
+      var name = recipe.ingredients[i].name;
+      print("------------------------");
+      print(recipe.ingredients[i].name);
+      recipe.englishIngredients[i].name = await translateText(
+        input: name,
+        lang: 'en',
+      );
+      print("==================");
+      print(recipe.ingredients[i].name);
+      print(recipe.englishIngredients[i].name);
+
+
+      print("------------------------");
+      print(recipe.ingredients[i].name);
+      recipe.spanishIngredients[i].name = await translateText(
+        input: name,
+        lang: 'es',
+      );
+      print("==================");
+      print(recipe.ingredients[i].name);
+      print(recipe.spanishIngredients[i].name);
+    }
+    for (var i = 0; i < recipe.steps.length; i++) {
+      recipe.steps[i].step =
+          capitalize(text: recipe.steps[i].step);
+      recipe.englishSteps[i].step = await translateText(
+        input: recipe.steps[i].step,
+        lang: 'en',
+      );
+      recipe.spanishSteps[i].step = await translateText(
+        input: recipe.steps[i].step,
+        lang: 'es',
+      );
+    }
+    return recipe;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -50,16 +124,22 @@ class _RecipeFormPageState extends State<RecipeFormPage> with LocalizedStateMixi
     _recipe = widget.recipeModel ??
         RecipeModel(
           name: '',
+          spanishName: '',
+          englishName: '',
           imagesList: [],
           rating: 0,
           userId: FirebaseAuthService.userId,
           category: [],
           cookingTime: '0 H',
           ingredients: [IngredientsModel(name: '', quantity: '', unit: null)],
+          spanishIngredients: [],
+          englishIngredients: [],
           ratings: [],
           savedUsersIds: [],
           serves: '1',
           steps: [StepsModel(step: '', image: '')],
+          spanishSteps: [],
+          englishSteps: [],
           timestamp: Timestamp.now(),
         );
     _imageController = RecipeImageController(
@@ -133,7 +213,7 @@ class _RecipeFormPageState extends State<RecipeFormPage> with LocalizedStateMixi
                   : "",
             ),
             const SizedBox(height: 12),
-            Text(lang.ingredients, style: kBoldW600f24Style),
+            Text(lang.ingredient + "s", style: kBoldW600f24Style),
             const SizedBox(height: 16),
             IngredientsFormWidget(
               ingredientsController: _ingredientsController,
@@ -260,7 +340,7 @@ class _RecipeFormPageState extends State<RecipeFormPage> with LocalizedStateMixi
       await Awaiter.process(
         future: _isEdit ? _update() : _save(),
         context: context,
-        arguments: 'Saving...',
+        arguments: 'Saving, Please wait this will take a moment...',
       );
       if (_isEdit) {
         $showSnackBar(context, 'Recipe Updated!');
@@ -284,7 +364,9 @@ class _RecipeFormPageState extends State<RecipeFormPage> with LocalizedStateMixi
           _step.image = await FirebaseStorageService.uploadFile(_step.local!);
         }
       }
-      await RecipeFirestoreService().insertFirestore(_recipe);
+      var finalRecipe = await translateRecipe(recipe: _recipe);
+      await RecipeFirestoreService()
+          .insertFirestore(finalRecipe);
     } catch (_) {
       rethrow;
     }
@@ -302,7 +384,10 @@ class _RecipeFormPageState extends State<RecipeFormPage> with LocalizedStateMixi
           _step.image = await FirebaseStorageService.uploadFile(_step.local!);
         }
       }
-      await RecipeFirestoreService().updateFirestore(_recipe);
+      var finalRecipe = await translateRecipe(recipe: _recipe);
+
+      await RecipeFirestoreService()
+          .updateFirestore(finalRecipe);
     } catch (_) {
       rethrow;
     }

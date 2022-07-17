@@ -49,8 +49,8 @@
   "category": "Category",
   "@category": {},
 
-  "ingredients": "Ingredient(s)",
-  "@ingredients": {},
+  "ingredient": "Ingredient",
+  "@ingredient": {},
 
   "item_name": "Item name",
   "@item_name": {},
@@ -81,6 +81,12 @@
 
   "recipe_form": "Recipe Form",
   "@recipe_form": {},
+
+  "step": "Step",
+  "@step": {},
+
+  "steps_with_item": "Items",
+  "@steps_with_item": {},
 
   "return_text": "Return",
   "@return_text": {},

@@ -109,7 +109,7 @@ class _RecipeWidgetState extends State<RecipeWidget> {
                 ),
               ], fit: StackFit.expand),
             ),
-            Text(widget.recipe.name, style: kBoldW600f24Style),
+            Text(isEnglish() ? widget.recipe.englishName : widget.recipe.spanishName, style: kBoldW600f24Style),
             SizedBox(
               height: 32,
               child: SimpleStreamBuilder<UserModel>.simpler(

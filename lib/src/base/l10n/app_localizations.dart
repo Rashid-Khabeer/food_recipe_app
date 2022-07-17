@@ -190,11 +190,11 @@ abstract class AppLocalizations {
   /// **'Category'**
   String get category;
 
-  /// No description provided for @ingredients.
+  /// No description provided for @ingredient.
   ///
   /// In en, this message translates to:
-  /// **'Ingredient(s)'**
-  String get ingredients;
+  /// **'Ingredient'**
+  String get ingredient;
 
   /// No description provided for @item_name.
   ///
@@ -255,6 +255,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recipe Form'**
   String get recipe_form;
+
+  /// No description provided for @step.
+  ///
+  /// In en, this message translates to:
+  /// **'Step'**
+  String get step;
+
+  /// No description provided for @steps_with_item.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get steps_with_item;
 
   /// No description provided for @return_text.
   ///

@@ -116,13 +116,15 @@ class _ProfileRecipeWidgetState extends State<ProfileRecipeWidget>
               ]),
               const Spacer(),
               Text(
-                widget.recipe.name,
+                isEnglish()
+                    ? widget.recipe.englishName
+                    : widget.recipe.spanishName,
                 style: kBoldW600f24Style.copyWith(color: Colors.white),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                '${widget.recipe.ingredients.length} ${lang.ingredients} | ${widget.recipe.cookingTime}',
+                '${widget.recipe.ingredients.length} ${lang.ingredient}(s) | ${widget.recipe.cookingTime}',
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,

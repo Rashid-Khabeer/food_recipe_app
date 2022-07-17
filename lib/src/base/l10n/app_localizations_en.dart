@@ -56,7 +56,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get category => 'Category';
 
   @override
-  String get ingredients => 'Ingredient(s)';
+  String get ingredient => 'Ingredient';
 
   @override
   String get item_name => 'Item name';
@@ -87,6 +87,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recipe_form => 'Recipe Form';
+
+  @override
+  String get step => 'Step';
+
+  @override
+  String get steps_with_item => 'Items';
 
   @override
   String get return_text => 'Return';

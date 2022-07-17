@@ -56,7 +56,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get category => 'Categoría';
 
   @override
-  String get ingredients => 'Ingrediente(s)';
+  String get ingredient => 'Ingrediente';
 
   @override
   String get item_name => 'Nombre del ingrediente';
@@ -87,6 +87,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get recipe_form => 'Receta Forma';
+
+  @override
+  String get step => 'Paso';
+
+  @override
+  String get steps_with_item => 'Pasos';
 
   @override
   String get return_text => 'Volver';
@@ -173,13 +179,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get recipes_by_creator => 'Recetas del creador';
 
   @override
-  String get rate_it => 'Puntúalo';
+  String get rate_it => 'Puntúala';
 
   @override
   String get reviews => 'Reseñas';
 
   @override
-  String get items => 'Elementos';
+  String get items => 'Ingredientes';
 
   @override
   String get trending_recipes => 'Recetas de tendencias';

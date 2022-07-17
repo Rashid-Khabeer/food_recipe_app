@@ -128,7 +128,7 @@ class _RecipeFormViewState extends State<RecipeFormView> with LocalizedStateMixi
       persistentFooterButtons: [
         ElevatedButton(
           onPressed: Navigator.of(context).pop,
-          child: const Text('Save'),
+          child: Text(lang.save),
         ),
       ],
     );

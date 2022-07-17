@@ -55,6 +55,9 @@
   "qty": "Cantidad",
   "@qty": {},
 
+  "step": "Paso",
+  "@step": {},
+
   "main_photo": "Foto principal",
   "@main_photo": {},
 
@@ -67,8 +70,8 @@
   "category": "Categoría",
   "@category": {},
 
-  "ingredients": "Ingrediente(s)",
-  "@ingredients": {},
+  "ingredient": "Ingrediente",
+  "@ingredient": {},
 
   "item_name": "Nombre del ingrediente",
   "@item_name": {},
@@ -78,6 +81,9 @@
 
   "steps": "Instrucciones",
   "@steps": {},
+
+  "steps_with_item": "Pasos",
+  "@steps_with_item": {},
 
   "steps_to_follow": "Pasos a seguir",
   "@steps_to_follow": {},
@@ -166,13 +172,13 @@
   "recipes_by_creator": "Recetas del creador",
   "@recipes_by_creator": {},
 
-  "rate_it": "Puntúalo",
+  "rate_it": "Puntúala",
   "@rate_it": {},
 
   "reviews": "Reseñas",
   "@reviews": {},
 
-  "items": "Elementos",
+  "items": "Ingredientes",
   "@items": {},
 
   "trending_recipes": "Recetas de tendencias",
