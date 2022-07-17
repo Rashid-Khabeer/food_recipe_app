@@ -187,7 +187,7 @@ class _HomeViewState extends State<HomeView> with LocalizedStateMixin {
                   AppNavigation.to(
                     context,
                     PopularCreatorsPage(
-                      dataFunction: RecipeFirestoreService().popularCreators,
+                      dataFunction: UserFirestoreService().popularCreators,
                       title: lang.popular_creators,
                       canPop: true,
                     ),
@@ -217,7 +217,7 @@ class _HomeViewState extends State<HomeView> with LocalizedStateMixin {
                         )
                       : const SizedBox();
                 },
-                future: RecipeFirestoreService().popularCreators(5),
+                future: UserFirestoreService().popularCreators(5),
               ),
             ),
           ),

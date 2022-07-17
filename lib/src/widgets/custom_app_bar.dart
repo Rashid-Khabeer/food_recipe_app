@@ -87,7 +87,7 @@ class _CustomAppBarState extends State<CustomAppBar> with ControlledStateMixin {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Opacity(
-                    opacity: opacity,
+                    opacity: widget.title == 'Volver' || widget.title == 'Return' ? 1: opacity,
                     child: Text(
                       widget.title!,
                       style: const TextStyle(

@@ -82,7 +82,7 @@ class _RecipeFormPageState extends State<RecipeFormPage> with LocalizedStateMixi
       appBar: CustomAppBar(
         controller: _scrollController,
         canPop: _isEdit,
-        title: 'Edit recipe',
+        title: lang.edit_recipe,
       ),
       body: Form(
         autovalidateMode: _autoValidateMode,
@@ -96,14 +96,14 @@ class _RecipeFormPageState extends State<RecipeFormPage> with LocalizedStateMixi
             MediaQuery.of(context).padding.bottom + 20,
           ),
           child: Column(children: [
-            const Text('Edit Recipe', style: kBoldW600f24Style),
+            Text(lang.edit_recipe, style: kBoldW600f24Style),
             RecipeImagePicker(imageController: _imageController),
             AppTextField(
-              hint: 'Recipe Name',
-              label: 'Recipe Name',
+              hint: lang.recipe_name,
+              label: lang.recipe_name,
               value: _recipe.name,
               validator: InputValidator.required(
-                message: 'Name is required',
+                message: lang.name_required,
               ),
               onSaved: (value) => _recipe.name = value ?? '',
             ),
@@ -124,7 +124,13 @@ class _RecipeFormPageState extends State<RecipeFormPage> with LocalizedStateMixi
             _buildTile(
               icon: AppAssets.friends,
               title: lang.category,
-              text: _recipe.category.isNotEmpty ? _recipe.category.first : '',
+              text: _recipe.category.isNotEmpty
+                  ? getCategoryValue(category: _recipe.category.first) +
+                      (_recipe.category.length > 1
+                              ? " +" + (_recipe.category.length - 1).toString()
+                              : "")
+                          .toString()
+                  : "",
             ),
             const SizedBox(height: 12),
             Text(lang.ingredients, style: kBoldW600f24Style),

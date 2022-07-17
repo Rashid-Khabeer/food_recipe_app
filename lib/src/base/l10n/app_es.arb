@@ -1,10 +1,10 @@
 {
   "@@locale": "es",
 
-  "lets_cooking": "Vamos a cocinar",
+  "lets_cooking": "Encuentra tu receta perfecta",
   "@lets_cooking": {},
 
-  "slogan": "Encuentra las mejores recetas de comida",
+  "slogan": "Inicia sesión con tu red social",
   "@slogan": {},
 
   "main_title": "Encuentra las mejores recetas para cocinar",
@@ -13,7 +13,13 @@
   "trending_now": "Siendo tendencia ahora",
   "@trending_now": {},
 
-  "see_all": "Ver todo",
+  "login": "Iniciar Sesión",
+  "@login": {},
+
+  "get_started": "Selecciona una red social",
+  "@get_started": {},
+
+  "see_all": "Ver todas",
   "@see_all": {},
 
   "popular_categories": "Populares por categoría",
@@ -31,37 +37,58 @@
   "saved_recipes": "Recetas guardadas",
   "@saved_recipes": {},
 
+  "edit_recipe": "Editar Receta",
+  "@edit_recipe": {},
+
+  "required": "obligatorio",
+  "@required": {},
+
+  "return_text": "Volver",
+  "@return_text": {},
+
+  "recipe_form": "Receta Forma",
+  "@recipe_form": {},
+
+  "recipe_name": "Nombre de la receta",
+  "@recipe_name": {},
+
+  "qty": "Cantidad",
+  "@qty": {},
+
   "main_photo": "Foto principal",
   "@main_photo": {},
 
-  "serves": "Servir",
+  "serves": "Comensales",
   "@serves": {},
 
-  "cooking_time": "Hora de cocinar",
+  "cooking_time": "Tiempo de preparación",
   "@cooking_time": {},
 
   "category": "Categoría",
   "@category": {},
 
-  "ingredients": "Ingredientes",
+  "ingredients": "Ingrediente(s)",
   "@ingredients": {},
 
-  "item_name": "Nombre del árticulo",
+  "item_name": "Nombre del ingrediente",
   "@item_name": {},
 
   "add_new_ingredient": "Agregar nuevo ingrediente",
   "@add_new_ingredient": {},
 
-  "steps": "Pasos",
+  "steps": "Instrucciones",
   "@steps": {},
 
   "steps_to_follow": "Pasos a seguir",
   "@steps_to_follow": {},
 
-  "uploaded_photo": "Foto cargada",
+  "uploaded_photo": "Foto del paso",
   "@uploaded_photo": {},
 
-  "add_another_step": "Agregar otro paso",
+  "optional": "Opcional",
+  "@optional": {},
+
+  "add_another_step": "Añadir otra paso",
   "@add_another_step": {},
 
   "save_recipe": "Guardar receta",
@@ -70,8 +97,26 @@
   "my_profile": "Mi perfil",
   "@my_profile": {},
 
-  "recipe": "Receta",
+  "recipe": "Recetas",
   "@recipe": {},
+
+  "yes": "Sí",
+  "@yes": {},
+
+  "edit": "Editar",
+  "@edit": {},
+
+  "sure_to_delete": "¿Seguro que quieres eliminar esta receta?",
+  "@sure_to_delete": {},
+
+  "delete": "Eliminar",
+  "@delete": {},
+
+  "name_required": "Campo obligatorio",
+  "@name_required": {},
+
+  "step_required": "Campo obligatorio",
+  "@step_required": {},
 
   "average_rating": "Puntuación media",
   "@average_rating": {},
@@ -79,7 +124,7 @@
   "edit_profile": "Editar perfil",
   "@edit_profile": {},
 
-  "logout": "cerrar sesión",
+  "logout": "Cerrar sesión",
   "@logout": {},
 
   "name": "Nombre",
@@ -103,13 +148,16 @@
   "select_categories": "Seleccionar categorías",
   "@select_categories": {},
 
-  "save": "Ahorrar",
+  "save": "Guardar",
   "@save": {},
+
+  "unsave": "Olvidar",
+  "@unsave": {},
 
   "order_by": "Ordenar",
   "@order_by": {},
 
-  "search_recipe": "Recetas de búsqueda",
+  "search_recipe": "Busca tu receta",
   "@search_recipe": {},
 
   "select_type": "Seleccione tipo",

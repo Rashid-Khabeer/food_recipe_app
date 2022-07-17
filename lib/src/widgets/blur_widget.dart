@@ -18,7 +18,6 @@ class BlurWidget extends StatelessWidget {
           sigmaY: 5.0,
         ),
         child: Container(
-          width: 58,
           height: 28,
           padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
           decoration: BoxDecoration(

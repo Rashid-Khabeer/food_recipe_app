@@ -8,6 +8,7 @@ import 'package:food_recipie_app/src/components/recipes/recipe_detail_page.dart'
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/network_image_widget.dart';
 import 'package:food_recipie_app/src/widgets/show_rating_widget.dart';
 
@@ -23,7 +24,8 @@ class ProfileRecipeWidget extends StatefulWidget {
   State<ProfileRecipeWidget> createState() => _ProfileRecipeWidgetState();
 }
 
-class _ProfileRecipeWidgetState extends State<ProfileRecipeWidget> {
+class _ProfileRecipeWidgetState extends State<ProfileRecipeWidget>
+    with LocalizedStateMixin {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -89,13 +91,13 @@ class _ProfileRecipeWidgetState extends State<ProfileRecipeWidget> {
                       }
                     },
                     itemBuilder: (context) => [
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 0,
-                        child: Text("Edit"),
+                        child: Text(lang.edit),
                       ),
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 1,
-                        child: Text("Delete"),
+                        child: Text(lang.delete),
                       ),
                     ],
                   ),
@@ -120,7 +122,7 @@ class _ProfileRecipeWidgetState extends State<ProfileRecipeWidget> {
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                '${widget.recipe.ingredients.length} Ingredient(s) | ${widget.recipe.cookingTime}',
+                '${widget.recipe.ingredients.length} ${lang.ingredients} | ${widget.recipe.cookingTime}',
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -137,7 +139,7 @@ class _ProfileRecipeWidgetState extends State<ProfileRecipeWidget> {
   _deleteAction() async {
     if (!(await $showConfirmationDialog(
       context,
-      'Are you sure you want to delete this recipe?',
+      lang.sure_to_delete,
     ))) {
       return;
     }

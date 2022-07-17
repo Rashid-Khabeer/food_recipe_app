@@ -55,7 +55,7 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> with LocalizedState
           bool haveCategory = false;
           for (var category in _selectedCategories) {
             for (var recipeCategory in recipe.category) {
-              if (category == recipeCategory) {
+              if (getCategoryKey(category: category) == recipeCategory) {
                 haveCategory = true;
                 break;
               }
@@ -83,7 +83,7 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> with LocalizedState
         bool haveCategory = false;
         for (var category in _selectedCategories) {
           for (var recipeCategory in recipe.category) {
-            if (category == recipeCategory) {
+            if (getCategoryKey(category: category) == recipeCategory) {
               haveCategory = true;
               break;
             }
@@ -118,8 +118,16 @@ class _RecipeSearchPageState extends State<RecipeSearchPage> with LocalizedState
         return myRecipes.reversed.toList();
       } else {
         myRecipes.sort((a, b) {
-          var time1 = int.parse(a.cookingTime.split(" ")[0]);
-          var time2 = int.parse(b.cookingTime.split(" ")[0]);
+          var split1 = a.cookingTime.split(" ");
+          var hour1 = split1[0].substring(0, split1[0].length - 1);
+          var min1 = split1[1].substring(0, split1[1].length - 1);
+          var time1 = hour1 + min1;
+
+          var split2 = b.cookingTime.split(" ");
+          var hour2 = split2[0].substring(0, split2[0].length - 1);
+          var min2 = split2[1].substring(0, split2[1].length - 1);
+          var time2 = hour2 + min2;
+
           return time1.compareTo(time2);
         });
         return myRecipes;
@@ -311,10 +319,12 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
   final Map<String, bool> _checkedCategories = {};
   OrderBy? _selectedOrderBy;
 
+  var categories = getCategories();
+
   late GlobalKey<FormFieldState> _key;
 
   buildSelectedCategoryMap() {
-    for (var cat in kRecipeCategories) {
+    for (var cat in categories) {
       _checkedCategories[cat] = false;
     }
     if (widget.selected.isNotEmpty) {
@@ -420,10 +430,10 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         return CheckboxListTile(
-                          title: Text(kRecipeCategories[index]),
-                          value: _checkedCategories[kRecipeCategories[index]],
+                          title: Text(categories[index]),
+                          value: _checkedCategories[categories[index]],
                           onChanged: (bool? value) {
-                            _checkedCategories[kRecipeCategories[index]] =
+                            _checkedCategories[categories[index]] =
                                 value ?? false;
                             widget.onChange(_checkedCategories.keys
                                 .where((element) =>
@@ -433,7 +443,7 @@ class _SortingDialogState extends State<SortingDialog> with LocalizedStateMixin 
                           },
                         );
                       },
-                      itemCount: kRecipeCategories.length,
+                      itemCount: getCategories().length,
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       addAutomaticKeepAlives: true,

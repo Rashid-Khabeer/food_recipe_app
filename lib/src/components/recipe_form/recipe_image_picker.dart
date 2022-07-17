@@ -76,7 +76,7 @@ class _RecipeImagePickerState extends State<RecipeImagePicker>
               top: 10,
               left: 16,
               child: Text(
-                lang.main_photo + ' (required)',
+                lang.main_photo + ' (${lang.required})',
                 style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 16,

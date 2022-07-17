@@ -70,7 +70,7 @@ class _IngredientsFormWidgetState extends State<IngredientsFormWidget>
                 child: AppTextField(
                   hint: lang.item_name,
                   validator: InputValidator.required(
-                    message: 'Name is required',
+                    message: lang.item_name + ' is required',
                   ),
                   value: widget.controller.ingredients[i].name,
                   onChanged: (value) {
@@ -98,7 +98,7 @@ class _IngredientsFormWidgetState extends State<IngredientsFormWidget>
               children: [
                 Expanded(
                   child: AppTextField(
-                    hint: 'Qty',
+                    hint: lang.qty,
                     value: widget.controller.ingredients[i].quantity,
                     onChanged: (value) {
                       widget.controller.ingredients[i].quantity = value ?? '';
@@ -111,7 +111,7 @@ class _IngredientsFormWidgetState extends State<IngredientsFormWidget>
                 Expanded(
                   child: AppDropDownWidget(
                     hint: "Unit",
-                    value: widget.controller.ingredients[i].unit,
+                    value: widget.controller.ingredients[i].unit ?? 'g',
                     onChanged: (String? v) {
                       widget.controller.ingredients[i].unit = v ?? '';
                       widget.controller

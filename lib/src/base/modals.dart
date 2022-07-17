@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_recipie_app/src/base/data.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
+import 'package:food_recipie_app/src/utils/const.dart';
 import 'package:food_recipie_app/src/widgets/loading_animation.dart';
 
 $showSnackBar(BuildContext context, String content) {
@@ -113,7 +115,9 @@ Future<bool> $showConfirmationDialog(
               Expanded(
                 child: OutlinedButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('Yes'),
+                  child: Text(
+                    isEnglish() ? 'Yes' : 'Sí',
+                  ),
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(0, 35),
                     padding: EdgeInsets.zero,

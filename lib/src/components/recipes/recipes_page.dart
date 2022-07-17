@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_recipie_app/src/components/recipes/recipe_widget.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
+import 'package:food_recipie_app/src/utils/localized_mixin.dart';
 import 'package:food_recipie_app/src/widgets/custom_app_bar.dart';
 import 'package:food_recipie_app/src/widgets/simple_stream_builder.dart';
 
@@ -21,14 +22,15 @@ class RecipesPage extends StatefulWidget {
   _RecipesPageState createState() => _RecipesPageState();
 }
 
-class _RecipesPageState extends State<RecipesPage> {
+class _RecipesPageState extends State<RecipesPage> with LocalizedStateMixin {
   final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: widget.title,
+        title:
+            widget.title == 'Saved recipes' ? lang.save_recipe : widget.title,
         canPop: widget.canPop,
         controller: _scrollController,
       ),
@@ -45,7 +47,12 @@ class _RecipesPageState extends State<RecipesPage> {
             SliverToBoxAdapter(
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(widget.title, style: kBoldW600f24Style),
+                child: Text(
+                  widget.title == 'Saved recipes'
+                      ? lang.save_recipe
+                      : widget.title,
+                  style: kBoldW600f24Style,
+                ),
               ),
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
@@ -59,6 +66,7 @@ class _RecipesPageState extends State<RecipesPage> {
                       return RecipeWidget(
                         recipe: data[index],
                         padding: const EdgeInsets.only(bottom: 16),
+                        withSaveButton: widget.title == 'Saved recipes',
                       );
                     },
                     childCount: data.length,

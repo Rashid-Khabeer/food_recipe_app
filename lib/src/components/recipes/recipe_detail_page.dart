@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:food_recipie_app/src/base/assets.dart';
 import 'package:food_recipie_app/src/base/modals.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
+import 'package:food_recipie_app/src/components/recipes/save_button_widget.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/services/app_firestore_service.dart';
 import 'package:food_recipie_app/src/services/firebase_auth_service.dart';
@@ -138,37 +139,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> with LocalizedState
                   ),
                 ),
                 const Spacer(),
-                TextButton(
-                  onPressed: () => _bookMarkAction(),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        AppAssets.saved,
-                        color: widget.recipe.savedUsersIds
-                                .contains(_userId)
-                            ? AppTheme.primaryColor.shade500
-                            : const Color(0xff130F26),
-                        height: 14.61,
-                        width: 18.22,
-                      ),
-                      const SizedBox(width: 7),
-                      Text(
-                        widget.recipe.savedUsersIds
-                                .contains(_userId)
-                            ? "Unsave"
-                            : "Save",
-                      ),
-                    ],
-                  ),
-                  style: TextButton.styleFrom(
-                    minimumSize: const Size(32, 32),
-                    primary: AppTheme.primaryColor.shade500,
-                    backgroundColor: Colors.white,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    elevation: 5,
-                    // shape: const CircleBorder(),
-                  ),
-                ),
+                SaveButton(recipe: widget.recipe, onClick: _bookMarkAction),
               ]),
               const SizedBox(height: 10),
               SizedBox(
@@ -267,11 +238,6 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> with LocalizedState
         ),
       ),
     ]);
-  }
-
-  String getDeviceType() {
-    final data = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
-    return data.size.shortestSide < 600 ? 'phone' : 'tablet';
   }
 
   List<Widget> _buildSteps(RecipeModel recipe) {

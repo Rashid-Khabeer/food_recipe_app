@@ -51,20 +51,24 @@ class _AuthPageState extends State<AuthPage> with LocalizedStateMixin {
         Column(children: [
           Padding(
             padding: EdgeInsets.only(top: _padding.top + 36),
-            child: const Text(
+            child: Text(
               'Reciats Unicas',
-              style: kBoldW600f16Style,
+              style: kBoldW600f16Style.copyWith(fontSize: 25),
             ),
           ),
           const Spacer(),
-          Text(
-            "Let's",
-            style: kBoldW600f16Style.copyWith(fontSize: 56),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Text(
+              lang.lets_cooking,
+              textAlign: TextAlign.center,
+              style: kBoldW600f16Style.copyWith(fontSize: 56),
+            ),
           ),
-          Text(
-            'Cooking',
-            style: kBoldW600f16Style.copyWith(fontSize: 56),
-          ),
+          // Text(
+          //   'Cooking',
+          //   style: kBoldW600f16Style.copyWith(fontSize: 56),
+          // ),
           const SizedBox(height: 24),
           Text(
             lang.slogan,
@@ -73,8 +77,8 @@ class _AuthPageState extends State<AuthPage> with LocalizedStateMixin {
           Padding(
             padding: EdgeInsets.only(bottom: _padding.bottom + 40, top: 44),
             child: ElevatedButton(
-              onPressed: _submit,
-              child: const Text('Log In'),
+              onPressed: () => _submit(lang.get_started),
+              child: Text(lang.login),
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
                 minimumSize: const Size(163, 66),
@@ -86,10 +90,15 @@ class _AuthPageState extends State<AuthPage> with LocalizedStateMixin {
     );
   }
 
-  void _submit() async {
+  _submit(String title) async {
     try {
       loginType? _type;
-      await $showLoginBottomSheet(context, (type) => _type = type);
+      await $showLoginBottomSheet(
+        context,
+        title,
+        getDeviceType() == 'tablet',
+        (type) => _type = type,
+      );
       if (_type == null) {
         return;
       }

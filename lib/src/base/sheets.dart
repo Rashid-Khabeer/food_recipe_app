@@ -82,6 +82,8 @@ $showImageSelectorSheet(
 
 Future<void> $showLoginBottomSheet(
   BuildContext context,
+  String title,
+  bool isTablet,
   void Function(loginType) onLoginSelected,
 ) async {
   final _mediaQuery = MediaQuery.of(context);
@@ -101,9 +103,9 @@ Future<void> $showLoginBottomSheet(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
             child: Column(children: [
-              const Text(
-                'Get Started',
-                style: TextStyle(
+              Text(
+                title,
+                style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                 ),
@@ -115,6 +117,7 @@ Future<void> $showLoginBottomSheet(
                 title: 'Google',
                 source: loginType.google,
                 loginTypeSelected: onLoginSelected,
+                isTablet: isTablet,
               ),
               const SizedBox(height: 5),
               _buildLoginSelectionRowWidget(
@@ -123,6 +126,7 @@ Future<void> $showLoginBottomSheet(
                 title: 'Facebook',
                 source: loginType.facebook,
                 loginTypeSelected: onLoginSelected,
+                isTablet: isTablet,
               ),
             ], mainAxisSize: MainAxisSize.min),
           ),
@@ -173,6 +177,7 @@ Widget _buildLoginSelectionRowWidget({
   required String title,
   required loginType source,
   required void Function(loginType) loginTypeSelected,
+  bool isTablet = false,
 }) {
   return InkWell(
     splashColor: AppTheme.primaryColor.shade400,
@@ -185,12 +190,12 @@ Widget _buildLoginSelectionRowWidget({
     child: Padding(
       padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
       child: Row(children: [
-        Image.asset(asset, height: 20, width: 20),
+        Image.asset(asset, height: isTablet ? 30 : 20, width: isTablet ? 30 : 20),
         const SizedBox(width: 20),
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 16,
+          style: TextStyle(
+            fontSize: isTablet ? 18 : 16,
             fontWeight: FontWeight.w500,
           ),
         ),

@@ -87,7 +87,7 @@ class _StepsFormWidgetState extends State<StepsFormWidget>
                 AppTextField(
                   hint: lang.steps_to_follow,
                   validator: InputValidator.required(
-                    message: 'Step is required',
+                    message: lang.step_required,
                   ),
                   value: widget.controller.steps[i].step,
                   onChanged: (value) {
@@ -124,7 +124,7 @@ class _StepsFormWidgetState extends State<StepsFormWidget>
                           top: 10,
                           left: 16,
                           child: Text(
-                            lang.uploaded_photo + ' (Optional)',
+                            lang.uploaded_photo + ' (${lang.optional})',
                             style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 16,

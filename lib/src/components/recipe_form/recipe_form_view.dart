@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_recipie_app/src/base/data.dart';
 import 'package:food_recipie_app/src/base/themes.dart';
 import 'package:food_recipie_app/src/data/models.dart';
 import 'package:food_recipie_app/src/utils/const.dart';
@@ -25,25 +26,22 @@ class _RecipeFormViewState extends State<RecipeFormView> with LocalizedStateMixi
   final _scrollController = ScrollController();
   var date = DateTime.utc(2022, 1, 1, 0, 0, 0, 0, 0);
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  var categories = getCategories();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
         controller: _scrollController,
-        title: 'Recipe Form',
+        title: lang.return_text,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-            const SliverToBoxAdapter(
-              child: Text('Recipe Form', style: kBoldW600f24Style),
+            SliverToBoxAdapter(
+              child: Text(lang.recipe_form, style: kBoldW600f24Style),
             ),
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
@@ -103,26 +101,27 @@ class _RecipeFormViewState extends State<RecipeFormView> with LocalizedStateMixi
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (ctx, index) {
-                  final _cat = kRecipeCategories[index];
-                  final _isSelected = widget.recipe.category.contains(_cat);
+                  final _cat = categories[index];
+                  final key = getCategoryKey(category: _cat);
+                  final _isSelected = widget.recipe.category.contains(key);
                   return CheckboxListTile(
                     title: Text(_cat),
                     value: _isSelected,
                     activeColor: AppTheme.primaryColor.shade500,
                     onChanged: (bool? value) {
                       if (_isSelected) {
-                        widget.recipe.category.remove(_cat);
+                        widget.recipe.category.remove(key);
                       } else {
-                        widget.recipe.category.add(_cat);
+                        widget.recipe.category.add(key!);
                       }
                       setState(() {});
                       widget.onChanged(widget.recipe);
                     },
                   );
                 },
-                childCount: kRecipeCategories.length,
+                childCount: categories.length,
               ),
-            )
+            ),
           ],
         ),
       ),

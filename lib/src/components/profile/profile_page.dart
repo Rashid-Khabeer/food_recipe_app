@@ -66,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> with LocalizedStateMixin {
                         builder: (context) => const DefaultLangDialog()),
                     child: Wrap(
                       children: [
-                        Text(AppData().getDefaultLang() == "en"
+                        Text(isEnglish()
                             ? "English"
                             : "Spanish"),
                         const Icon(Icons.keyboard_arrow_down),
@@ -81,6 +81,7 @@ class _ProfilePageState extends State<ProfilePage> with LocalizedStateMixin {
                 ),
                 context: context,
                 builder: (user) {
+                  print(user.profilePicture);
                   return Column(children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 44, 0, 16),

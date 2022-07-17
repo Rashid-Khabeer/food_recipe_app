@@ -16,10 +16,12 @@ class PopularCategoryView extends StatefulWidget {
 class _PopularCategoryViewState extends State<PopularCategoryView> {
   var _selected = '';
 
+  var categories = getCategories();
+
   @override
   void initState() {
     super.initState();
-    _selected = kRecipeCategories.first;
+    _selected = categories.first;
   }
 
   @override
@@ -30,7 +32,7 @@ class _PopularCategoryViewState extends State<PopularCategoryView> {
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemBuilder: (ctx, i) {
-            final _item = kRecipeCategories[i];
+            final _item = categories[i];
             var _isSelected = _item == _selected;
             return GestureDetector(
               onTap: () {
@@ -58,7 +60,7 @@ class _PopularCategoryViewState extends State<PopularCategoryView> {
               ),
             );
           },
-          itemCount: kRecipeCategories.length,
+          itemCount: categories.length,
         ),
       ),
       const SizedBox(height: 16),

@@ -8,10 +8,10 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
-  String get lets_cooking => 'Vamos a cocinar';
+  String get lets_cooking => 'Encuentra tu receta perfecta';
 
   @override
-  String get slogan => 'Encuentra las mejores recetas de comida';
+  String get slogan => 'Inicia sesión con tu red social';
 
   @override
   String get main_title => 'Encuentra las mejores recetas para cocinar';
@@ -20,7 +20,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get trending_now => 'Siendo tendencia ahora';
 
   @override
-  String get see_all => 'Ver todo';
+  String get login => 'Iniciar Sesión';
+
+  @override
+  String get get_started => 'Selecciona una red social';
+
+  @override
+  String get see_all => 'Ver todas';
 
   @override
   String get popular_categories => 'Populares por categoría';
@@ -41,43 +47,82 @@ class AppLocalizationsEs extends AppLocalizations {
   String get main_photo => 'Foto principal';
 
   @override
-  String get serves => 'Servir';
+  String get serves => 'Comensales';
 
   @override
-  String get cooking_time => 'Hora de cocinar';
+  String get cooking_time => 'Tiempo de preparación';
 
   @override
   String get category => 'Categoría';
 
   @override
-  String get ingredients => 'Ingredientes';
+  String get ingredients => 'Ingrediente(s)';
 
   @override
-  String get item_name => 'Nombre del árticulo';
+  String get item_name => 'Nombre del ingrediente';
 
   @override
   String get add_new_ingredient => 'Agregar nuevo ingrediente';
 
   @override
-  String get steps => 'Pasos';
+  String get steps => 'Instrucciones';
 
   @override
   String get steps_to_follow => 'Pasos a seguir';
 
   @override
-  String get uploaded_photo => 'Foto cargada';
+  String get uploaded_photo => 'Foto del paso';
 
   @override
-  String get add_another_step => 'Agregar otro paso';
+  String get add_another_step => 'Añadir otra paso';
 
   @override
   String get save_recipe => 'Guardar receta';
 
   @override
+  String get edit_recipe => 'Editar Receta';
+
+  @override
+  String get required => 'obligatorio';
+
+  @override
+  String get recipe_form => 'Receta Forma';
+
+  @override
+  String get return_text => 'Volver';
+
+  @override
+  String get recipe_name => 'Nombre de la receta';
+
+  @override
+  String get qty => 'Cantidad';
+
+  @override
+  String get optional => 'Opcional';
+
+  @override
+  String get sure_to_delete => '¿Seguro que quieres eliminar esta receta?';
+
+  @override
+  String get name_required => 'Campo obligatorio';
+
+  @override
+  String get step_required => 'Campo obligatorio';
+
+  @override
   String get my_profile => 'Mi perfil';
 
   @override
-  String get recipe => 'Receta';
+  String get recipe => 'Recetas';
+
+  @override
+  String get yes => 'Sí';
+
+  @override
+  String get edit => 'Editar';
+
+  @override
+  String get delete => 'Eliminar';
 
   @override
   String get average_rating => 'Puntuación media';
@@ -86,7 +131,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get edit_profile => 'Editar perfil';
 
   @override
-  String get logout => 'cerrar sesión';
+  String get logout => 'Cerrar sesión';
 
   @override
   String get name => 'Nombre';
@@ -110,13 +155,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get select_categories => 'Seleccionar categorías';
 
   @override
-  String get save => 'Ahorrar';
+  String get save => 'Guardar';
+
+  @override
+  String get unsave => 'Olvidar';
 
   @override
   String get order_by => 'Ordenar';
 
   @override
-  String get search_recipe => 'Recetas de búsqueda';
+  String get search_recipe => 'Busca tu receta';
 
   @override
   String get select_type => 'Seleccione tipo';

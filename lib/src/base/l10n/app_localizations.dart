@@ -118,6 +118,18 @@ abstract class AppLocalizations {
   /// **'Trending now'**
   String get trending_now;
 
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Log In'**
+  String get login;
+
+  /// No description provided for @get_started.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get get_started;
+
   /// No description provided for @see_all.
   ///
   /// In en, this message translates to:
@@ -181,7 +193,7 @@ abstract class AppLocalizations {
   /// No description provided for @ingredients.
   ///
   /// In en, this message translates to:
-  /// **'Ingredients'**
+  /// **'Ingredient(s)'**
   String get ingredients;
 
   /// No description provided for @item_name.
@@ -226,6 +238,66 @@ abstract class AppLocalizations {
   /// **'Save Recipe'**
   String get save_recipe;
 
+  /// No description provided for @edit_recipe.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Recipe'**
+  String get edit_recipe;
+
+  /// No description provided for @required.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get required;
+
+  /// No description provided for @recipe_form.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe Form'**
+  String get recipe_form;
+
+  /// No description provided for @return_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get return_text;
+
+  /// No description provided for @recipe_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe Name'**
+  String get recipe_name;
+
+  /// No description provided for @qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get qty;
+
+  /// No description provided for @optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optional;
+
+  /// No description provided for @sure_to_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this recipe?'**
+  String get sure_to_delete;
+
+  /// No description provided for @name_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get name_required;
+
+  /// No description provided for @step_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Step is required'**
+  String get step_required;
+
   /// No description provided for @my_profile.
   ///
   /// In en, this message translates to:
@@ -237,6 +309,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recipe'**
   String get recipe;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
 
   /// No description provided for @average_rating.
   ///
@@ -303,6 +393,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
+
+  /// No description provided for @unsave.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsave'**
+  String get unsave;
 
   /// No description provided for @order_by.
   ///

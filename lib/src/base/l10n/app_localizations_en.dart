@@ -20,6 +20,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get trending_now => 'Trending now';
 
   @override
+  String get login => 'Log In';
+
+  @override
+  String get get_started => 'Get Started';
+
+  @override
   String get see_all => 'See all';
 
   @override
@@ -50,7 +56,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get category => 'Category';
 
   @override
-  String get ingredients => 'Ingredients';
+  String get ingredients => 'Ingredient(s)';
 
   @override
   String get item_name => 'Item name';
@@ -74,10 +80,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String get save_recipe => 'Save Recipe';
 
   @override
+  String get edit_recipe => 'Edit Recipe';
+
+  @override
+  String get required => 'Required';
+
+  @override
+  String get recipe_form => 'Recipe Form';
+
+  @override
+  String get return_text => 'Return';
+
+  @override
+  String get recipe_name => 'Recipe Name';
+
+  @override
+  String get qty => 'Qty';
+
+  @override
+  String get optional => 'Optional';
+
+  @override
+  String get sure_to_delete => 'Are you sure you want to delete this recipe?';
+
+  @override
+  String get name_required => 'Name is required';
+
+  @override
+  String get step_required => 'Step is required';
+
+  @override
   String get my_profile => 'My Profile';
 
   @override
   String get recipe => 'Recipe';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get delete => 'Delete';
 
   @override
   String get average_rating => 'Average Rating';
@@ -111,6 +156,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save => 'Save';
+
+  @override
+  String get unsave => 'Unsave';
 
   @override
   String get order_by => 'Order By';

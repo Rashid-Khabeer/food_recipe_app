@@ -13,6 +13,12 @@
   "trending_now": "Trending now",
   "@trending_now": {},
 
+  "login": "Log In",
+  "@login": {},
+
+  "get_started": "Get Started",
+  "@get_started": {},
+
   "see_all": "See all",
   "@see_all": {},
 
@@ -43,7 +49,7 @@
   "category": "Category",
   "@category": {},
 
-  "ingredients": "Ingredients",
+  "ingredients": "Ingredient(s)",
   "@ingredients": {},
 
   "item_name": "Item name",
@@ -67,11 +73,50 @@
   "save_recipe": "Save Recipe",
   "@save_recipe": {},
 
+  "edit_recipe": "Edit Recipe",
+  "@edit_recipe": {},
+
+  "required": "Required",
+  "@required": {},
+
+  "recipe_form": "Recipe Form",
+  "@recipe_form": {},
+
+  "return_text": "Return",
+  "@return_text": {},
+
+  "recipe_name": "Recipe Name",
+  "@recipe_name": {},
+
+  "qty": "Qty",
+  "@qty": {},
+
+  "optional": "Optional",
+  "@optional": {},
+
+  "sure_to_delete": "Are you sure you want to delete this recipe?",
+  "@sure_to_delete": {},
+
+  "name_required": "Name is required",
+  "@name_required": {},
+
+  "step_required": "Step is required",
+  "@step_required": {},
+
   "my_profile": "My Profile",
   "@my_profile": {},
 
   "recipe": "Recipe",
   "@recipe": {},
+
+  "yes": "Yes",
+  "@yes": {},
+
+  "edit": "Edit",
+  "@edit": {},
+
+  "delete": "Delete",
+  "@delete": {},
 
   "average_rating": "Average Rating",
   "@average_rating": {},
@@ -105,6 +150,9 @@
 
   "save": "Save",
   "@save": {},
+
+  "unsave": "Unsave",
+  "@unsave": {},
 
   "order_by": "Order By",
   "@order_by": {},
